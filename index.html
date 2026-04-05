@@ -1,0 +1,2124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EEO Data Intelligence | 2026-2028 IBP Grant Initiative</title>
+  <meta name="description" content="Project management intelligence dashboard for the EEO Innovative Best Practices Grant Initiative — monitoring fund allocations, outcomes, and progress across 11 California Community College Districts." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --bg-base: #0a0e1a;
+      --bg-surface: #111827;
+      --bg-card: #1a2235;
+      --bg-card-hover: #1f2a40;
+      --border: #2a3650;
+      --border-light: #1e2d48;
+      --text-primary: #f0f4ff;
+      --text-secondary: #8b9ec7;
+      --text-muted: #4a5a7a;
+      --accent-blue: #3b82f6;
+      --accent-blue-dim: rgba(59,130,246,0.12);
+      --accent-green: #22c55e;
+      --accent-green-dim: rgba(34,197,94,0.12);
+      --accent-amber: #f59e0b;
+      --accent-amber-dim: rgba(245,158,11,0.12);
+      --accent-purple: #a855f7;
+      --accent-purple-dim: rgba(168,85,247,0.12);
+      --accent-cyan: #06b6d4;
+      --accent-red: #ef4444;
+      --tier1-color: #22c55e;
+      --tier1-dim: rgba(34,197,94,0.15);
+      --tier2-color: #3b82f6;
+      --tier2-dim: rgba(59,130,246,0.15);
+      --font-body: 'Inter', sans-serif;
+      --font-mono: 'DM Mono', monospace;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+      --shadow-card: 0 2px 20px rgba(0,0,0,0.4);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg-base);
+      color: var(--text-primary);
+      min-height: 100vh;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      position: fixed;
+      left: 0; top: 0; bottom: 0;
+      width: 220px;
+      background: var(--bg-surface);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      z-index: 100;
+      overflow-y: auto;
+    }
+
+    .sidebar-logo {
+      padding: 20px 18px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo-mark {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 4px;
+    }
+
+    .logo-icon {
+      width: 32px; height: 32px;
+      flex-shrink: 0;
+    }
+
+    .logo-text {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: 0.02em;
+      line-height: 1.2;
+    }
+
+    .logo-sub {
+      font-size: 10px;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .sidebar-nav {
+      flex: 1;
+      padding: 12px 0;
+    }
+
+    .nav-section-label {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 12px 18px 6px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 18px;
+      color: var(--text-secondary);
+      cursor: pointer;
+      border-left: 2px solid transparent;
+      transition: all 0.15s ease;
+      font-size: 13px;
+      text-decoration: none;
+      border-radius: 0;
+    }
+
+    .nav-item:hover {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      border-left-color: var(--border);
+    }
+
+    .nav-item.active {
+      background: var(--accent-blue-dim);
+      color: var(--accent-blue);
+      border-left-color: var(--accent-blue);
+    }
+
+    .nav-item svg { opacity: 0.7; flex-shrink: 0; }
+    .nav-item.active svg { opacity: 1; }
+
+    .sidebar-footer {
+      padding: 14px 18px;
+      border-top: 1px solid var(--border);
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .sidebar-footer .fund-monitor {
+      font-size: 10px;
+      margin-top: 4px;
+      color: var(--text-muted);
+    }
+
+    /* ── MAIN CONTENT ── */
+    .main {
+      margin-left: 220px;
+      min-height: 100vh;
+    }
+
+    /* ── TOPBAR ── */
+    .topbar {
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .topbar-left h1 {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .topbar-left p {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 1px;
+    }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .grant-badge {
+      background: var(--accent-blue-dim);
+      border: 1px solid rgba(59,130,246,0.3);
+      color: var(--accent-blue);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.02em;
+    }
+
+    .status-dot {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      color: var(--accent-green);
+    }
+
+    .status-dot::before {
+      content: '';
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--accent-green);
+      box-shadow: 0 0 0 2px var(--accent-green-dim);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    /* ── CONTENT SECTIONS ── */
+    .content {
+      padding: 24px 28px 40px;
+    }
+
+    .section {
+      display: none;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    /* ── SECTION HEADER ── */
+    .section-header {
+      margin-bottom: 20px;
+    }
+
+    .section-header h2 {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .section-header p {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    /* ── KPI ROW ── */
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .kpi-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 16px 18px;
+      transition: border-color 0.15s ease;
+    }
+
+    .kpi-card:hover {
+      border-color: var(--border-light);
+    }
+
+    .kpi-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .kpi-value {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-primary);
+      font-family: var(--font-mono);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .kpi-value.blue { color: var(--accent-blue); }
+    .kpi-value.green { color: var(--accent-green); }
+    .kpi-value.amber { color: var(--accent-amber); }
+    .kpi-value.purple { color: var(--accent-purple); }
+    .kpi-value.cyan { color: var(--accent-cyan); }
+
+    .kpi-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* ── GRID LAYOUTS ── */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    /* ── CARD ── */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 18px;
+      box-shadow: var(--shadow-card);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .card-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .card-label {
+      font-size: 10px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    /* ── TIER BADGE ── */
+    .tier-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 8px;
+      border-radius: 20px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .tier-badge.tier-1 {
+      background: var(--tier1-dim);
+      color: var(--tier1-color);
+      border: 1px solid rgba(34,197,94,0.3);
+    }
+
+    .tier-badge.tier-2 {
+      background: var(--tier2-dim);
+      color: var(--tier2-color);
+      border: 1px solid rgba(59,130,246,0.3);
+    }
+
+    /* ── DISTRICT TABLE ── */
+    .district-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .district-table th {
+      text-align: left;
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .district-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border-light);
+      font-size: 13px;
+      color: var(--text-secondary);
+      vertical-align: middle;
+    }
+
+    .district-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .district-table tr:hover td {
+      background: var(--bg-card-hover);
+      color: var(--text-primary);
+    }
+
+    .district-name {
+      font-weight: 600;
+      color: var(--text-primary);
+      font-size: 13px;
+    }
+
+    .district-program {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 1px;
+    }
+
+    .amount {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .amount.tier-1 { color: var(--tier1-color); }
+    .amount.tier-2 { color: var(--tier2-color); }
+
+    /* ── PROGRESS BARS ── */
+    .progress-bar-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .progress-bar-bg {
+      flex: 1;
+      height: 6px;
+      background: var(--border);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      border-radius: 3px;
+      transition: width 1s ease;
+    }
+
+    .progress-bar-fill.green { background: var(--accent-green); }
+    .progress-bar-fill.blue { background: var(--accent-blue); }
+
+    .progress-pct {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      width: 36px;
+      text-align: right;
+    }
+
+    /* ── DISTRICT DETAIL CARDS ── */
+    .district-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 14px;
+    }
+
+    .district-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      transition: all 0.15s ease;
+      cursor: pointer;
+    }
+
+    .district-card:hover {
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 0 1px var(--accent-blue), 0 4px 20px rgba(59,130,246,0.1);
+    }
+
+    .dc-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .dc-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.3;
+    }
+
+    .dc-program {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 3px;
+      line-height: 1.4;
+    }
+
+    .dc-amount {
+      font-size: 18px;
+      font-weight: 700;
+      font-family: var(--font-mono);
+    }
+
+    .dc-amount.tier-1 { color: var(--tier1-color); }
+    .dc-amount.tier-2 { color: var(--tier2-color); }
+
+    .dc-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 10px 0;
+    }
+
+    .dc-meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .dc-meta-item label {
+      display: block;
+      font-size: 10px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 2px;
+    }
+
+    .dc-meta-item span {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .dc-outcomes {
+      margin-top: 10px;
+    }
+
+    .dc-outcomes label {
+      font-size: 10px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .outcome-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+
+    .outcome-tag {
+      font-size: 10px;
+      padding: 2px 7px;
+      border-radius: 10px;
+      background: var(--bg-base);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+    }
+
+    /* ── BUDGET BREAKDOWN TABLE ── */
+    .budget-category {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .budget-category:last-child {
+      border-bottom: none;
+    }
+
+    .bc-label {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .bc-value {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+
+    /* ── TIMELINE ── */
+    .timeline-bar {
+      display: flex;
+      gap: 2px;
+      height: 24px;
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 6px 0;
+    }
+
+    .timeline-segment {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 9px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.8);
+      letter-spacing: 0.03em;
+    }
+
+    /* ── OUTCOMES TABLE ── */
+    .outcomes-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .outcome-row {
+      background: var(--bg-base);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+    }
+
+    .outcome-row .district { font-size: 11px; font-weight: 600; color: var(--accent-blue); margin-bottom: 3px; }
+    .outcome-row .desc { font-size: 12px; color: var(--text-secondary); line-height: 1.5; }
+
+    /* ── CHART CONTAINER ── */
+    .chart-wrap {
+      position: relative;
+      height: 220px;
+    }
+
+    .chart-wrap.tall {
+      height: 300px;
+    }
+
+    /* ── FILTER BAR ── */
+    .filter-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .filter-btn {
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 500;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .filter-btn:hover {
+      background: var(--bg-card);
+      color: var(--text-primary);
+    }
+
+    .filter-btn.active {
+      background: var(--accent-blue-dim);
+      border-color: rgba(59,130,246,0.4);
+      color: var(--accent-blue);
+    }
+
+    /* ── CONTACT TABLE ── */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 12px;
+    }
+
+    .contact-card {
+      background: var(--bg-base);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+    }
+
+    .contact-card .district { font-size: 10px; font-weight: 600; color: var(--accent-blue); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 4px; }
+    .contact-card .name { font-size: 13px; font-weight: 600; color: var(--text-primary); }
+    .contact-card .role { font-size: 11px; color: var(--text-muted); }
+    .contact-card .email { font-size: 11px; color: var(--accent-cyan); margin-top: 3px; }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg-base); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+    /* ── DIVIDER ── */
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 20px 0;
+    }
+
+    /* ── FULL WIDTH CARD ── */
+    .full-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 18px;
+      margin-bottom: 16px;
+    }
+
+    /* ── ALLIANCE BANNER ── */
+    .alliance-banner {
+      background: linear-gradient(135deg, rgba(59,130,246,0.1), rgba(168,85,247,0.1));
+      border: 1px solid rgba(59,130,246,0.2);
+      border-radius: var(--radius-md);
+      padding: 14px 18px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .alliance-banner svg { flex-shrink: 0; }
+
+    .alliance-banner p { font-size: 12px; color: var(--text-secondary); line-height: 1.5; }
+    .alliance-banner strong { color: var(--text-primary); }
+
+    /* ── FUND MONITOR BAR ── */
+    .monitor-bar {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 20px;
+      font-size: 12px;
+    }
+
+    .monitor-bar .label { color: var(--text-muted); }
+    .monitor-bar .value { color: var(--text-primary); font-weight: 500; }
+    .monitor-bar .sep { color: var(--border); }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .sidebar { width: 180px; }
+      .main { margin-left: 180px; }
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-mark">
+      <svg class="logo-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="EEO Data Intelligence Logo">
+        <rect width="32" height="32" rx="8" fill="#1e3a5f"/>
+        <rect x="6" y="20" width="4" height="8" rx="2" fill="#22c55e"/>
+        <rect x="12" y="14" width="4" height="14" rx="2" fill="#3b82f6"/>
+        <rect x="18" y="9" width="4" height="19" rx="2" fill="#a855f7"/>
+        <rect x="24" y="5" width="4" height="23" rx="2" fill="#06b6d4"/>
+        <circle cx="8" cy="17" r="2" fill="#22c55e" opacity="0.8"/>
+        <circle cx="14" cy="11" r="2" fill="#3b82f6" opacity="0.8"/>
+        <circle cx="20" cy="6" r="2" fill="#a855f7" opacity="0.8"/>
+        <circle cx="26" cy="3" r="2" fill="#06b6d4" opacity="0.8"/>
+        <polyline points="8,17 14,11 20,6 26,3" stroke="#ffffff" stroke-width="1" stroke-opacity="0.3" fill="none" stroke-dasharray="2,2"/>
+      </svg>
+      <div>
+        <div class="logo-text">EEO Data<br>Intelligence</div>
+      </div>
+    </div>
+    <div class="logo-sub">2026–2028 IBP Grant</div>
+  </div>
+
+  <div class="sidebar-nav">
+    <div class="nav-section-label">Dashboard</div>
+    <a class="nav-item active" onclick="showSection('overview')" href="#">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+      Overview
+    </a>
+    <a class="nav-item" onclick="showSection('fund-allocations')" href="#">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      Fund Allocations
+    </a>
+    <a class="nav-item" onclick="showSection('districts')" href="#">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      Districts
+    </a>
+    <a class="nav-item" onclick="showSection('outcomes')" href="#">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      Outcomes
+    </a>
+    <a class="nav-item" onclick="showSection('budget-breakdown')" href="#">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+      Budget Breakdown
+    </a>
+    <div class="nav-section-label">Program</div>
+    <a class="nav-item" onclick="showSection('timeline')" href="#">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      Timeline
+    </a>
+    <a class="nav-item" onclick="showSection('contacts')" href="#">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      Contacts
+    </a>
+  </div>
+
+  <div class="sidebar-footer">
+    <div>Fund: 2026-2028 EEO IBP</div>
+    <div class="fund-monitor">Monitor: Marrin Thuston</div>
+    <div class="fund-monitor">mthuston@cccco.edu</div>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <h1>EEO Data Intelligence</h1>
+      <p>California Community Colleges · EEO Innovative Best Practices Grant Initiative</p>
+    </div>
+    <div class="topbar-right">
+      <div class="status-dot">Active</div>
+      <div class="grant-badge">2026–2028 EEO IBP</div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- ═══════════════════════ OVERVIEW ═══════════════════════ -->
+    <div id="section-overview" class="section active">
+      <div class="section-header">
+        <h2>Program Overview</h2>
+        <p>Statewide summary of the EEO Innovative Best Practices grant across 11 community college districts</p>
+      </div>
+
+      <div class="monitor-bar">
+        <span class="label">Fund Monitor</span>
+        <span class="value">Marrin Thuston</span>
+        <span class="sep">|</span>
+        <span class="label">Grant ID</span>
+        <span class="value">2026-2028 EEO IBP</span>
+        <span class="sep">|</span>
+        <span class="label">Start</span>
+        <span class="value">Q3 2025-26</span>
+        <span class="sep">|</span>
+        <span class="label">Duration</span>
+        <span class="value">2 years + 2 quarters</span>
+      </div>
+
+      <!-- KPIs -->
+      <div class="kpi-row">
+        <div class="kpi-card">
+          <div class="kpi-label">Total Grant Funding</div>
+          <div class="kpi-value green">$1.40M</div>
+          <div class="kpi-sub">Across 11 districts</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Total Districts</div>
+          <div class="kpi-value blue">11</div>
+          <div class="kpi-sub">All submitted</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Tier 1 Districts</div>
+          <div class="kpi-value green">7</div>
+          <div class="kpi-sub">$150K each</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Tier 2 Districts</div>
+          <div class="kpi-value amber">4</div>
+          <div class="kpi-sub">$100K each (LIFT Alliance)</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">LIFT Alliance Members</div>
+          <div class="kpi-value purple">4</div>
+          <div class="kpi-sub">Antelope Valley, Citrus, Peralta, West Valley-Mission</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Program Focus Areas</div>
+          <div class="kpi-value cyan">8</div>
+          <div class="kpi-sub">Mentorship, Training, Hiring, Tech &amp; more</div>
+        </div>
+      </div>
+
+      <!-- Alliance Banner -->
+      <div class="alliance-banner">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <p><strong>LIFT Alliance:</strong> Four of the 11 districts (Antelope Valley CCD, Citrus CCD, Peralta CCD, and West Valley-Mission CCD) are members of an unprecedented 10-college-10-region statewide alliance formed by the Leadership Institute for Tomorrow (LIFT), implementing a shared Mentor Match platform across California Community College regions.</p>
+      </div>
+
+      <!-- Charts row -->
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Fund Allocation by Tier</div>
+            <div class="card-label">Total Distribution</div>
+          </div>
+          <div class="chart-wrap">
+            <canvas id="tierChart"></canvas>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Program Focus Areas</div>
+            <div class="card-label">By Initiative Type</div>
+          </div>
+          <div class="chart-wrap">
+            <canvas id="focusChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- District Quick Summary -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">District Summary</div>
+          <div class="card-label">All 11 Districts · $1,399,997 Total</div>
+        </div>
+        <table class="district-table">
+          <thead>
+            <tr>
+              <th>District</th>
+              <th>Program Title</th>
+              <th>Tier</th>
+              <th>Funding</th>
+              <th>Focus</th>
+            </tr>
+          </thead>
+          <tbody id="overview-table-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════ FUND ALLOCATIONS ═══════════════════════ -->
+    <div id="section-fund-allocations" class="section">
+      <div class="section-header">
+        <h2>Fund Allocations</h2>
+        <p>Detailed breakdown of grant funding by district, tier, and fiscal year</p>
+      </div>
+
+      <div class="kpi-row">
+        <div class="kpi-card">
+          <div class="kpi-label">Total Allocated</div>
+          <div class="kpi-value green">$1,399,997</div>
+          <div class="kpi-sub">All 11 districts combined</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Tier 1 Total</div>
+          <div class="kpi-value blue">$999,997</div>
+          <div class="kpi-sub">7 districts (avg ~$142.9K)</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Tier 2 Total</div>
+          <div class="kpi-value amber">$400,000</div>
+          <div class="kpi-sub">4 districts × $100K each</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Total Indirect Costs</div>
+          <div class="kpi-value purple">~$53K</div>
+          <div class="kpi-sub">Avg ~4.8% of direct costs</div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Funding by District</div>
+            <div class="card-label">Bar Chart</div>
+          </div>
+          <div class="chart-wrap tall">
+            <canvas id="districtFundChart"></canvas>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Tier Comparison</div>
+            <div class="card-label">Funding Split</div>
+          </div>
+          <div class="chart-wrap">
+            <canvas id="tierSplitChart"></canvas>
+          </div>
+          <div class="divider"></div>
+          <div class="card-title" style="margin-bottom:12px;font-size:12px;">Budget Category Mix (Statewide)</div>
+          <div class="chart-wrap" style="height:150px;">
+            <canvas id="categoryChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Allocation by District Table -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">District-Level Allocation Detail</div>
+          <div class="card-label">With Indirect Cost Breakdown</div>
+        </div>
+        <table class="district-table">
+          <thead>
+            <tr>
+              <th>District</th>
+              <th>Tier</th>
+              <th>Direct Funds</th>
+              <th>Indirect Funds</th>
+              <th>Indirect %</th>
+              <th>Total Budget</th>
+              <th>Budget Proportion</th>
+            </tr>
+          </thead>
+          <tbody id="allocation-table-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════ DISTRICTS ═══════════════════════ -->
+    <div id="section-districts" class="section">
+      <div class="section-header">
+        <h2>District Profiles</h2>
+        <p>Detailed program information for each of the 11 participating community college districts</p>
+      </div>
+
+      <div class="filter-bar">
+        <button class="filter-btn active" onclick="filterDistricts('all', this)">All Districts</button>
+        <button class="filter-btn" onclick="filterDistricts('tier1', this)">Tier 1 Only</button>
+        <button class="filter-btn" onclick="filterDistricts('tier2', this)">Tier 2 Only</button>
+        <button class="filter-btn" onclick="filterDistricts('lift', this)">LIFT Alliance</button>
+      </div>
+
+      <div class="district-cards-grid" id="district-cards-container"></div>
+    </div>
+
+    <!-- ═══════════════════════ OUTCOMES ═══════════════════════ -->
+    <div id="section-outcomes" class="section">
+      <div class="section-header">
+        <h2>Expected Outcomes</h2>
+        <p>Key deliverables and measurable outcomes across all 11 districts</p>
+      </div>
+
+      <div class="kpi-row">
+        <div class="kpi-card">
+          <div class="kpi-label">Total Outcomes Tracked</div>
+          <div class="kpi-value blue">38+</div>
+          <div class="kpi-sub">Across all districts</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Mentorship Programs</div>
+          <div class="kpi-value green">7</div>
+          <div class="kpi-sub">Districts with mentorship</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Training Programs</div>
+          <div class="kpi-value amber">8</div>
+          <div class="kpi-sub">Districts with training</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Tech-Enhanced Programs</div>
+          <div class="kpi-value purple">2</div>
+          <div class="kpi-sub">VR, Mentor platform</div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Outcome Categories</div>
+            <div class="card-label">Statewide</div>
+          </div>
+          <div class="chart-wrap">
+            <canvas id="outcomeCategoryChart"></canvas>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Employee Groups Targeted</div>
+            <div class="card-label">Classification Focus</div>
+          </div>
+          <div class="chart-wrap">
+            <canvas id="employeeGroupChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="full-card">
+        <div class="card-header">
+          <div class="card-title">Key Outcomes by District</div>
+        </div>
+        <div class="outcomes-list" id="outcomes-list"></div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════ BUDGET BREAKDOWN ═══════════════════════ -->
+    <div id="section-budget-breakdown" class="section">
+      <div class="section-header">
+        <h2>Budget Breakdown</h2>
+        <p>Expenditure categories and allocations across the grant portfolio</p>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Statewide Budget Categories</div>
+            <div class="card-label">Object Code Distribution</div>
+          </div>
+          <div class="chart-wrap tall">
+            <canvas id="budgetBreakdownChart"></canvas>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Object Code Reference</div>
+          </div>
+          <div id="budget-object-list"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">District Budget Summaries</div>
+          <div class="card-label">Annual Breakdown by Fiscal Year</div>
+        </div>
+        <table class="district-table">
+          <thead>
+            <tr>
+              <th>District</th>
+              <th>Year 1 (2025-26)</th>
+              <th>Year 2 (2026-27)</th>
+              <th>Year 3 (2027-28)</th>
+              <th>Total</th>
+              <th>Primary Expenditure Focus</th>
+            </tr>
+          </thead>
+          <tbody id="budget-annual-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════ TIMELINE ═══════════════════════ -->
+    <div id="section-timeline" class="section">
+      <div class="section-header">
+        <h2>Project Timeline</h2>
+        <p>Implementation schedule across the 2025-2029 grant period</p>
+      </div>
+
+      <div class="kpi-row">
+        <div class="kpi-card">
+          <div class="kpi-label">Grant Start</div>
+          <div class="kpi-value cyan" style="font-size:18px;">Q3 2025-26</div>
+          <div class="kpi-sub">January 2026</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Grant End</div>
+          <div class="kpi-value amber" style="font-size:18px;">Q4 2027-28</div>
+          <div class="kpi-sub">June 2028</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Duration</div>
+          <div class="kpi-value blue" style="font-size:18px;">2.5 Years</div>
+          <div class="kpi-sub">2 years + 2 quarters</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Kickoff Meeting</div>
+          <div class="kpi-value green" style="font-size:18px;">Jan 12, 2026</div>
+          <div class="kpi-sub">Grantee kickoff (per RFA)</div>
+        </div>
+      </div>
+
+      <div class="full-card">
+        <div class="card-header">
+          <div class="card-title">District Implementation Timelines</div>
+          <div class="card-label">By Fiscal Year Quarter</div>
+        </div>
+        <div id="timeline-bars" style="display:flex;flex-direction:column;gap:14px;"></div>
+      </div>
+
+      <div class="grid-2" style="margin-top:16px;">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Phase 1: Planning</div>
+            <div class="card-label">Q3 2025-26 (Jan–Jun 2026)</div>
+          </div>
+          <ul style="padding-left:16px;display:flex;flex-direction:column;gap:8px;">
+            <li style="font-size:12px;color:var(--text-secondary);">Grantee kickoff meeting (January 12, 2026)</li>
+            <li style="font-size:12px;color:var(--text-secondary);">Program coordinator onboarding and framework development</li>
+            <li style="font-size:12px;color:var(--text-secondary);">Initial infrastructure setup (platforms, VR hardware, software)</li>
+            <li style="font-size:12px;color:var(--text-secondary);">Mentor/mentee recruitment and initial matching</li>
+            <li style="font-size:12px;color:var(--text-secondary);">Data collection baselines established</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Phase 2: Implementation</div>
+            <div class="card-label">2026-27 Full Year</div>
+          </div>
+          <ul style="padding-left:16px;display:flex;flex-direction:column;gap:8px;">
+            <li style="font-size:12px;color:var(--text-secondary);">Full training program rollout across all districts</li>
+            <li style="font-size:12px;color:var(--text-secondary);">Mentor/mentee program in active operation</li>
+            <li style="font-size:12px;color:var(--text-secondary);">VR pedagogy training series (Kern CCD)</li>
+            <li style="font-size:12px;color:var(--text-secondary);">LIFT alliance regional meet-up meetings</li>
+            <li style="font-size:12px;color:var(--text-secondary);">Annual progress reporting to CCCCO</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Phase 3: Evaluation</div>
+            <div class="card-label">2027-28 + Q4 Close</div>
+          </div>
+          <ul style="padding-left:16px;display:flex;flex-direction:column;gap:8px;">
+            <li style="font-size:12px;color:var(--text-secondary);">Final impact studies and program evaluations</li>
+            <li style="font-size:12px;color:var(--text-secondary);">Outcomes data analysis and disaggregation</li>
+            <li style="font-size:12px;color:var(--text-secondary);">White papers and governance board resolutions (SDCCD)</li>
+            <li style="font-size:12px;color:var(--text-secondary);">Institutionalization of best practices</li>
+            <li style="font-size:12px;color:var(--text-secondary);">Final grant reporting to fund monitor</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Phase 4: Sustainability</div>
+            <div class="card-label">Post-Grant (2028-29+)</div>
+          </div>
+          <ul style="padding-left:16px;display:flex;flex-direction:column;gap:8px;">
+            <li style="font-size:12px;color:var(--text-secondary);">Programs institutionalized into regular district operations</li>
+            <li style="font-size:12px;color:var(--text-secondary);">VR hardware and software maintained by college general funds</li>
+            <li style="font-size:12px;color:var(--text-secondary);">LIFT platform continued by alliance colleges</li>
+            <li style="font-size:12px;color:var(--text-secondary);">District EEO plans updated to reflect new practices</li>
+            <li style="font-size:12px;color:var(--text-secondary);">Mentorship programs transitioned to permanent sub-committees</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════ CONTACTS ═══════════════════════ -->
+    <div id="section-contacts" class="section">
+      <div class="section-header">
+        <h2>Project Contacts</h2>
+        <p>Project lead contacts and fiscal reporters across all 11 districts</p>
+      </div>
+
+      <div class="monitor-bar">
+        <span class="label">System Fund Monitor</span>
+        <span class="value">Marrin Thuston</span>
+        <span class="sep">|</span>
+        <span class="label">Email</span>
+        <span class="value" style="color:var(--accent-cyan)">mthuston@cccco.edu</span>
+        <span class="sep">|</span>
+        <span class="label">Organization</span>
+        <span class="value">California Community Colleges Chancellor's Office (CCCCO)</span>
+      </div>
+
+      <div class="contact-grid" id="contacts-grid"></div>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /main -->
+
+<script>
+// ══════════════════════════════════
+// DATA
+// ══════════════════════════════════
+const districts = [
+  {
+    id: 'ahc',
+    name: 'Allan Hancock Joint CCD',
+    shortName: 'Allan Hancock',
+    program: 'AHC Professional Development and EEO Representative Programs',
+    tier: 1,
+    funding: 100000,
+    indirectFunds: 4762,
+    indirectPct: '4.76%',
+    address: '800 S. College Drive, Santa Maria, CA 93454',
+    lift: false,
+    focus: ['Mentorship', 'Training', 'Hiring Equity'],
+    outcomes: [
+      'Diversity Resource Specialist (DRS) program: 8 classified staff trained annually',
+      'DRS training handbook development and 2 annual training sessions',
+      'DRS members deployed to minimum 2 hiring committees each',
+      'Equity-Focused Faculty Mentorship Model: 4 mentors trained',
+      'Pilot cohort of 8 mentees completing full training cycle',
+      'Improvements in faculty self-efficacy and student success metrics'
+    ],
+    contact: { name: 'LeeAnne McNulty', role: 'Project Lead Contact', email: 'leeanne.mcnulty@hancockcollege.edu' },
+    altContact: { name: 'Craig Bach Ph.D.', role: 'Project Lead Contact', email: 'craig.bach@hancockcollege.edu' },
+    fiscalReporter: { name: 'Laura Becker', institution: 'Allan Hancock Joint CCD', email: 'laura.becker@hancockcollege.edu' },
+    budgetHighlights: {
+      'Instructional Salaries (1000)': 46080,
+      'Employee Benefits (3000)': 9999,
+      'Supplies & Materials (4000)': 1159,
+      'Other Operating & Services (5000)': 38000,
+      'Indirect Costs (7000)': 4762
+    },
+    yearlyBudget: { y1: 14055, y2: 44053, y3: 41892 },
+    primaryFocus: 'Hiring Equity & Mentorship'
+  },
+  {
+    id: 'avc',
+    name: 'Antelope Valley CCD',
+    shortName: 'Antelope Valley',
+    program: 'LIFT Mentor Match Pilot Program - AVC',
+    tier: 2,
+    funding: 100000,
+    indirectFunds: 0,
+    indirectPct: '0%',
+    address: '3041 West Avenue K, Lancaster, CA 93536',
+    lift: true,
+    liftRegion: 'Region 6',
+    focus: ['Mentorship', 'Technology Platform', 'Classified Staff Development'],
+    outcomes: [
+      'Mentor Match Program via LIFT Mentor & Match Professional Platform',
+      'Technology platform for matching, managing, and tracking mentorship',
+      'Program coordination among 10 LIFT alliance colleges statewide',
+      'Training sessions for mentors and mentees across all employment levels',
+      'Real-time tracking and customized reporting at campus and system levels',
+      'Evaluation & impact study for program outcomes and scalability'
+    ],
+    contact: { name: 'Rebecca Farley', role: 'Project Lead Contact', email: 'rebecca.farley@avc.edu' },
+    altContact: { name: 'Paloma Astorga', role: 'Project Lead Contact', email: 'paloma.astorga@avc.edu' },
+    fiscalReporter: { name: 'Christos Valiotis', institution: 'Antelope Valley CCD', email: 'cvaliotis@avc.edu' },
+    budgetHighlights: {
+      'Instructional Salaries (1000)': 9000,
+      'Non-Instructional Salaries (2000)': 34085,
+      'Other Operating & Services (5000)': 56915
+    },
+    yearlyBudget: { y1: 16830, y2: 23255, y3: 59915 },
+    primaryFocus: 'LIFT Mentorship Platform'
+  },
+  {
+    id: 'citrus',
+    name: 'Citrus CCD',
+    shortName: 'Citrus CCD',
+    program: 'LIFT Mentor Match Pilot Program',
+    tier: 2,
+    funding: 100000,
+    indirectFunds: 0,
+    indirectPct: '0%',
+    address: 'N/A',
+    lift: true,
+    liftRegion: 'Region 8',
+    focus: ['Mentorship', 'Technology Platform', 'Classified Staff Equity'],
+    outcomes: [
+      'LIFT Mentor & Match Professional Platform implementation',
+      'Equal access to professional development for all employee classifications',
+      'Admin, faculty, and classified staff mentorship access',
+      'Real-time tracking and regional reporting system',
+      'In-person regional mentor/mentee meet-up events',
+      'Standardized training curriculum development and delivery'
+    ],
+    contact: { name: 'My Chau', role: 'Project Lead Contact', email: 'mchau@citruscollege.edu' },
+    altContact: { name: 'Greg Schulz Ed.D.', role: 'Plan Approver', email: 'gschulz@citruscollege.edu' },
+    fiscalReporter: { name: 'Claudette Dain', institution: 'Citrus CCD', email: 'cdain@citruscollege.edu' },
+    budgetHighlights: {
+      'Non-Instructional Salaries (2000)': 18000,
+      'Employee Benefits (3000)': 1060,
+      'Other Operating & Services (5000)': 74940,
+      'Indirect (7000)': 5000
+    },
+    yearlyBudget: { y1: 15000, y2: 40500, y3: 44500 },
+    primaryFocus: 'LIFT Mentorship Platform'
+  },
+  {
+    id: 'kern',
+    name: 'Kern CCD',
+    shortName: 'Kern CCD',
+    program: 'VR EEO Faculty Development and Peer Mentoring Program',
+    tier: 1,
+    funding: 150000,
+    indirectFunds: 7496,
+    indirectPct: '5%',
+    address: '2100 Chester Avenue, Bakersfield, CA 93301',
+    lift: false,
+    focus: ['VR Technology', 'Faculty Development', 'Peer Mentoring', 'Inclusive Pedagogy'],
+    outcomes: [
+      '60 Meta Quest 3 VR headsets deployed across 3 district colleges',
+      'Virtual Reality faculty development 6-session training series',
+      '20 faculty stipends for VR training and curriculum integration (Year 2)',
+      'District-wide digital lesson catalog of VR-enhanced lessons',
+      'Faculty peer mentoring pairs across all disciplines',
+      'Districtwide showcase of faculty VR innovations',
+      'VR content creation training using Unity tools (Year 3)'
+    ],
+    contact: { name: 'Bobby Becka', role: 'Project Lead Contact', email: 'bobby.becka@kccd.edu' },
+    altContact: { name: 'Rachel Tatro-Duarte', role: 'Project Lead Contact', email: 'rachel.tatroduarte@portervillecollege.edu' },
+    fiscalReporter: { name: 'Cathi Jacob', institution: 'Kern CCD', email: 'cjacob@kccd.edu' },
+    budgetHighlights: {
+      'Certificated Salaries (1000)': 32660,
+      'Employee Benefits (3000)': 7074,
+      'Supplies & Equipment (4000)': 90750,
+      'Services (5000)': 12020,
+      'Indirect (7000)': 7496
+    },
+    yearlyBudget: { y1: 50735, y2: 71503, y3: 27762 },
+    primaryFocus: 'VR Faculty Development'
+  },
+  {
+    id: 'mtsac',
+    name: 'Mt. San Antonio CCD',
+    shortName: 'Mt. SAC',
+    program: 'Advancing Equity and Belonging Through Mentorship and Restorative Practices',
+    tier: 1,
+    funding: 150000,
+    indirectFunds: 7142,
+    indirectPct: '4.76%',
+    address: '1100 N. Grand Avenue, Walnut, CA 91789',
+    lift: false,
+    focus: ['Mentorship (NESP)', 'Restorative Justice', 'Employee Retention', 'Onboarding'],
+    outcomes: [
+      'New Employee Success Program (NESP) expansion with Qooper software',
+      '7 additional faculty mentor-mentee pairs',
+      'Broader access for classified staff, managers, and adjunct faculty',
+      'Restorative Justice (RJ) Program expansion with trained facilitators',
+      'Campus-wide RJ education and refined referral protocols',
+      'Quantitative and qualitative outcomes tracking via Qooper platform',
+      'Sustainable facilitator recognition model'
+    ],
+    contact: { name: 'Adrienne Price', role: 'Project Lead Contact', email: 'aprice@mtsac.edu' },
+    altContact: null,
+    fiscalReporter: { name: 'Delana Miller', institution: 'Mt. San Antonio CCD', email: 'dmiller102@mtsac.edu' },
+    budgetHighlights: {
+      'Instructional Salaries (1000)': 12000,
+      'Non-Instructional Salaries (2000)': 67925,
+      'Employee Benefits (3000)': 6576,
+      'Supplies & Materials (4000)': 14857,
+      'Other Operating & Services (5000)': 41500,
+      'Indirect (7000)': 7142
+    },
+    yearlyBudget: { y1: 38000, y2: 64000, y3: 48000 },
+    primaryFocus: 'Mentorship & Restorative Justice'
+  },
+  {
+    id: 'nocccd',
+    name: 'North Orange County CCD',
+    shortName: 'North Orange County',
+    program: 'Equity First: Advancing Inclusive Hiring Through Training, Voice, and Data',
+    tier: 1,
+    funding: 150000,
+    indirectFunds: 7142,
+    indirectPct: '4.76%',
+    address: '1830 Romneya Drive, Anaheim, CA 92801',
+    lift: false,
+    focus: ['Hiring Equity', 'EEO Training', 'Student Voice', 'Data Analytics'],
+    outcomes: [
+      'Interactive scenario-based EEO training modules (Title 5 compliant)',
+      'Student Hiring Committee Participant Program (50 students across 3 campuses)',
+      'Measurable increase in hiring committee preparedness',
+      'Reduction in adverse hiring impacts',
+      '3% improvement in workforce-student demographic alignment by 2028',
+      'Automated training tracking and compliance reporting system',
+      'Professional video production ($50K) for training modules'
+    ],
+    contact: { name: 'Lisa King GPC', role: 'Project Lead Contact', email: 'lking@nocccd.edu' },
+    altContact: { name: 'Mylene Daniels', role: 'Project Lead Contact', email: 'mdaniels@nocccd.edu' },
+    fiscalReporter: { name: 'Erika Almaraz', institution: 'North Orange County CCD', email: 'ealmaraz@nocccd.edu' },
+    budgetHighlights: {
+      'Non-Instructional Salaries (2000)': 14127,
+      'Supplies & Materials (4000)': 8000,
+      'Consulting/Video Production (5000)': 100000,
+      'Student Participant Compensation (5000)': 40000,
+      'Indirect (7000)': 7142
+    },
+    yearlyBudget: { y1: 22000, y2: 71000, y3: 57000 },
+    primaryFocus: 'Hiring Equity & Student Inclusion'
+  },
+  {
+    id: 'peralta',
+    name: 'Peralta CCD',
+    shortName: 'Peralta CCD',
+    program: 'Peralta Community College Mentor Match Program',
+    tier: 2,
+    funding: 100000,
+    indirectFunds: 5000,
+    indirectPct: '5%',
+    address: '333 E. Eighth Street, Oakland, CA 94606',
+    lift: true,
+    liftRegion: 'Region 3',
+    focus: ['Mentorship', 'Technology Platform', 'Classified Staff Equity'],
+    outcomes: [
+      'LIFT Mentor & Match Professional Platform deployment',
+      'Classified professionals gain equitable leadership opportunities',
+      'Standardized training curriculum for mentors and mentees',
+      'Regional in-person meet-up meetings across campuses',
+      'Program data collection and impact evaluation study',
+      'Real-time engagement tracking at campus and system levels'
+    ],
+    contact: { name: 'Emily Kaplan', role: 'Project Lead Contact', email: 'ekaplan@peralta.edu' },
+    altContact: { name: 'Jamille Teer', role: 'Alternate Project Lead', email: 'jteer@peralta.edu' },
+    fiscalReporter: { name: 'Emily Kaplan', institution: 'Peralta CCD', email: 'ekaplan@peralta.edu' },
+    budgetHighlights: {
+      'Non-Instructional Salaries (2000)': 57420,
+      'Employee Benefits (3000)': 8280,
+      'LIFT Services (5000)': 29300,
+      'Indirect (7000)': 5000
+    },
+    yearlyBudget: { y1: 25580, y2: 37210, y3: 37210 },
+    primaryFocus: 'LIFT Mentorship Platform'
+  },
+  {
+    id: 'sdccd',
+    name: 'San Diego CCD',
+    shortName: 'San Diego CCD',
+    program: 'TRACE: Transparent Recruitment & Accountability for Candidate Equity',
+    tier: 1,
+    funding: 149997,
+    indirectFunds: 7142,
+    indirectPct: '4.76%',
+    address: '3375 Camino del Rio South, San Diego, CA 92108',
+    lift: false,
+    focus: ['Hiring Audit', 'Data Analytics', 'Policy Reform', 'Focus Groups'],
+    outcomes: [
+      '33-member cross-constituent EEO Workgroup established',
+      'Five years of disaggregated hiring data analysis and process mapping',
+      '12 focus groups and districtwide survey on hiring lived experience',
+      'White Paper with 10+ actionable recommendations published',
+      '10% increase in underrepresented finalists (pilot target)',
+      '15% reduction in time-to-hire disparities (pilot target)',
+      'Governing Board resolution to institutionalize Tier 1 recommendations',
+      'Permanent sub-committees on Data & Metrics, Policy & Procedure, Training'
+    ],
+    contact: { name: 'Jared Burns Dr.', role: 'Project Lead Contact', email: 'jburns001@sdccd.edu' },
+    altContact: { name: 'John Valencia', role: 'Alternate Project Lead', email: 'john@goodforothers.org' },
+    fiscalReporter: { name: 'Dan Troy', institution: 'San Diego CCD', email: 'dtroy@sdccd.edu' },
+    budgetHighlights: {
+      'Instructional Salaries (1000)': 24370,
+      'Non-Instructional Salaries (2000)': 38000,
+      'Supplies & Materials (4000)': 2605,
+      'Consultants & Focus Groups (5000)': 77880,
+      'Indirect (7000)': 7142
+    },
+    yearlyBudget: { y1: 30000, y2: 60000, y3: 59997 },
+    primaryFocus: 'Hiring Audit & Data Analytics'
+  },
+  {
+    id: 'smc',
+    name: 'Santa Monica CCD',
+    shortName: 'Santa Monica',
+    program: 'Santa Monica College EEO Innovative Best Practices (IBP)',
+    tier: 1,
+    funding: 150000,
+    indirectFunds: 7143,
+    indirectPct: '4.76%',
+    address: '1900 Pico Boulevard, Santa Monica, CA 90405',
+    lift: false,
+    focus: ['Professional Development', 'Mentorship', 'Conference Participation', 'Employee Resource Groups'],
+    outcomes: [
+      'Professional development interdepartmental workshops (3-4 sessions/year)',
+      'District-wide session serving 200+ employees annually',
+      'Conference participation for 2-3 staff at 2-3 conferences yearly',
+      'Mentorship program: 10 employee-mentor pairs meeting 4x/year',
+      '5 Employee Resource Groups (ERGs) sponsored and supported',
+      'Inclusive, equitable organizational culture metrics tracked'
+    ],
+    contact: { name: 'Tracy Beidleman', role: 'Project Lead Contact', email: 'beidleman_tracy@smc.edu' },
+    altContact: { name: 'Diana Pennington', role: 'Project Lead Contact', email: 'pennington_diana@smc.edu' },
+    fiscalReporter: { name: 'Ann Le', institution: 'Santa Monica CCD', email: 'le_ann@smc.edu' },
+    budgetHighlights: {
+      'Faculty Stipends / Overtime (1000+2000)': 40000,
+      'Professional Development Travel (5000)': 45000,
+      'ERG & Consultant Support (5000)': 57857,
+      'Indirect (7000)': 7143
+    },
+    yearlyBudget: { y1: 0, y2: 75000, y3: 75000 },
+    primaryFocus: 'Workforce Belonging & ERGs'
+  },
+  {
+    id: 'scccd',
+    name: 'State Center CCD',
+    shortName: 'State Center CCD',
+    program: 'State Center CCD EEO IBP – FIT 2.0 (Faculty in Training)',
+    tier: 1,
+    funding: 150000,
+    indirectFunds: 7143,
+    indirectPct: '4.76%',
+    address: '1171 Fulton Street, Fresno, CA 93721',
+    lift: false,
+    focus: ['Faculty Pipeline', 'Internship', 'Pre-Hiring Intervention', 'DEIA Hiring'],
+    outcomes: [
+      'FIT Program: structured internships for prospective faculty candidates',
+      '10 interns and 10 mentors supported per year across 4 SCCCD colleges',
+      'Expanded and diversified applicant pool for faculty positions',
+      'Intern completion, preparedness, and teaching confidence metrics',
+      'Intern employment and hiring outcomes tracked',
+      'Integration of culturally responsive pedagogy',
+      'Outreach to minority-serving institutions for recruitment',
+      'Long-term sustainability plan beyond grant period'
+    ],
+    contact: { name: 'Nickolas Trujillo', role: 'Project Lead Contact', email: 'nickolas.trujillo@scccd.edu' },
+    altContact: { name: 'Susan Soudchantho', role: 'Alternate Project Lead', email: 'susan.soudchantho@scccd.edu' },
+    fiscalReporter: { name: 'David El Fattal', institution: 'State Center CCD', email: 'accounting@scccd.edu' },
+    budgetHighlights: {
+      'Faculty Coordinator (15% FTE) (1000)': 25000,
+      'Intern & Mentor Stipends (1000)': 70000,
+      'Outreach & Recruitment (5000)': 20000,
+      'Program Marketing & Evaluation (5000)': 27857,
+      'Indirect (7000)': 7143
+    },
+    yearlyBudget: { y1: 30000, y2: 60000, y3: 60000 },
+    primaryFocus: 'Faculty Pipeline (FIT Program)'
+  },
+  {
+    id: 'wvm',
+    name: 'West Valley-Mission CCD',
+    shortName: 'West Valley-Mission',
+    program: 'LIFT Mentor Match Pilot Program (Mission College)',
+    tier: 2,
+    funding: 100000,
+    indirectFunds: 0,
+    indirectPct: '0%',
+    address: '14000 Fruitvale Avenue, Saratoga, CA 95070',
+    lift: true,
+    liftRegion: 'Region 4',
+    focus: ['Mentorship', 'Technology Platform', 'Classified Staff Equity'],
+    outcomes: [
+      'LIFT Mentor & Match Professional Platform implementation',
+      'Equitable professional development for all employee types',
+      'Dedicated classified professional as campus lead',
+      'Regional meet-up meetings to strengthen cross-campus relationships',
+      'Program coordination with 10-college LIFT alliance',
+      'Annual evaluation and impact study for scalability'
+    ],
+    contact: { name: 'Ken Songco', role: 'Project Lead Contact', email: 'kenneth.songco@missioncollege.edu' },
+    altContact: { name: 'Amanda Marshall', role: 'Alternate Project Lead', email: 'amanda.marshall@missioncollege.edu' },
+    fiscalReporter: { name: 'Danny Nguyen', institution: 'West Valley-Mission CCD', email: 'danny.nguyen@missioncollege.edu' },
+    budgetHighlights: {
+      'Non-Instructional Salaries (2000)': 57420,
+      'Employee Benefits (3000)': 8280,
+      'LIFT Services (5000)': 34300
+    },
+    yearlyBudget: { y1: 23000, y2: 38500, y3: 38500 },
+    primaryFocus: 'LIFT Mentorship Platform'
+  }
+];
+
+const totalFunding = districts.reduce((a, d) => a + d.funding, 0);
+
+// ══════════════════════════════════
+// NAVIGATION
+// ══════════════════════════════════
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('section-' + id).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => {
+    if (n.getAttribute('onclick') && n.getAttribute('onclick').includes("'" + id + "'")) {
+      n.classList.add('active');
+    }
+  });
+}
+
+// ══════════════════════════════════
+// FORMATTERS
+// ══════════════════════════════════
+function fmt(n) {
+  return '$' + n.toLocaleString('en-US');
+}
+
+function fmtPct(n, total) {
+  return ((n / total) * 100).toFixed(1) + '%';
+}
+
+// ══════════════════════════════════
+// RENDER OVERVIEW TABLE
+// ══════════════════════════════════
+function renderOverviewTable() {
+  const tbody = document.getElementById('overview-table-body');
+  tbody.innerHTML = districts.map(d => `
+    <tr>
+      <td>
+        <div class="district-name">${d.name}</div>
+        <div class="district-program">${d.lift ? '🔗 LIFT Alliance (' + d.liftRegion + ')' : ''}</div>
+      </td>
+      <td style="max-width:260px;font-size:12px;color:var(--text-muted)">${d.program}</td>
+      <td><span class="tier-badge tier-${d.tier}">Tier ${d.tier}</span></td>
+      <td><span class="amount tier-${d.tier}">${fmt(d.funding)}</span></td>
+      <td style="font-size:12px;color:var(--text-muted)">${d.focus.slice(0,2).join(' · ')}</td>
+    </tr>
+  `).join('');
+}
+
+// ══════════════════════════════════
+// RENDER ALLOCATION TABLE
+// ══════════════════════════════════
+function renderAllocationTable() {
+  const tbody = document.getElementById('allocation-table-body');
+  tbody.innerHTML = districts.map(d => {
+    const pct = fmtPct(d.funding, totalFunding);
+    const pctNum = ((d.funding / totalFunding) * 100).toFixed(1);
+    return `
+    <tr>
+      <td><div class="district-name">${d.shortName}</div></td>
+      <td><span class="tier-badge tier-${d.tier}">Tier ${d.tier}</span></td>
+      <td><span class="amount tier-${d.tier}">${fmt(d.funding - d.indirectFunds)}</span></td>
+      <td style="font-family:var(--font-mono);font-size:13px;color:var(--text-secondary)">${d.indirectFunds ? fmt(d.indirectFunds) : '—'}</td>
+      <td style="font-size:12px;color:var(--text-muted)">${d.indirectPct}</td>
+      <td><span class="amount tier-${d.tier}">${fmt(d.funding)}</span></td>
+      <td style="min-width:140px;">
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill ${d.tier === 1 ? 'green' : 'blue'}" style="width:${pctNum}%"></div>
+          </div>
+          <span class="progress-pct">${pct}</span>
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+// ══════════════════════════════════
+// RENDER DISTRICT CARDS
+// ══════════════════════════════════
+function renderDistrictCards(filter) {
+  const container = document.getElementById('district-cards-container');
+  let filtered = districts;
+  if (filter === 'tier1') filtered = districts.filter(d => d.tier === 1);
+  if (filter === 'tier2') filtered = districts.filter(d => d.tier === 2);
+  if (filter === 'lift') filtered = districts.filter(d => d.lift);
+
+  container.innerHTML = filtered.map(d => `
+    <div class="district-card">
+      <div class="dc-top">
+        <div>
+          <div class="dc-name">${d.name}</div>
+          <div class="dc-program">${d.program}</div>
+        </div>
+        <div style="text-align:right">
+          <div class="dc-amount tier-${d.tier}">${fmt(d.funding)}</div>
+          <span class="tier-badge tier-${d.tier}" style="margin-top:4px;display:inline-flex">Tier ${d.tier}</span>
+        </div>
+      </div>
+      <div class="dc-divider"></div>
+      <div class="dc-meta">
+        <div class="dc-meta-item">
+          <label>Location</label>
+          <span>${d.address.split(',').slice(-2).join(',').trim()}</span>
+        </div>
+        <div class="dc-meta-item">
+          <label>Indirect</label>
+          <span>${d.indirectFunds ? fmt(d.indirectFunds) + ' (' + d.indirectPct + ')' : 'N/A'}</span>
+        </div>
+        <div class="dc-meta-item">
+          <label>Primary Focus</label>
+          <span>${d.primaryFocus}</span>
+        </div>
+        <div class="dc-meta-item">
+          <label>Alliance</label>
+          <span>${d.lift ? 'LIFT ' + d.liftRegion : 'Independent'}</span>
+        </div>
+      </div>
+      <div class="dc-outcomes">
+        <label>Focus Areas</label>
+        <div class="outcome-tags">
+          ${d.focus.map(f => `<span class="outcome-tag">${f}</span>`).join('')}
+        </div>
+      </div>
+      <div class="dc-divider"></div>
+      <div style="font-size:11px;color:var(--text-muted)"><span style="color:var(--accent-blue);font-weight:600">Lead:</span> ${d.contact.name} · <span style="color:var(--accent-cyan)">${d.contact.email}</span></div>
+    </div>
+  `).join('');
+}
+
+function filterDistricts(filter, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderDistrictCards(filter);
+}
+
+// ══════════════════════════════════
+// RENDER OUTCOMES
+// ══════════════════════════════════
+function renderOutcomes() {
+  const list = document.getElementById('outcomes-list');
+  list.innerHTML = districts.map(d => `
+    <div class="outcome-row">
+      <div class="district">${d.name} · <span style="color:var(--text-muted);font-weight:400">${d.program}</span></div>
+      <div class="desc">
+        <ul style="padding-left:14px;margin-top:5px;display:flex;flex-direction:column;gap:4px;">
+          ${d.outcomes.map(o => `<li>${o}</li>`).join('')}
+        </ul>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ══════════════════════════════════
+// RENDER BUDGET ANNUAL TABLE
+// ══════════════════════════════════
+function renderBudgetAnnual() {
+  const tbody = document.getElementById('budget-annual-body');
+  tbody.innerHTML = districts.map(d => `
+    <tr>
+      <td><div class="district-name">${d.shortName}</div></td>
+      <td style="font-family:var(--font-mono);font-size:12px;color:var(--text-secondary)">${d.yearlyBudget.y1 ? fmt(d.yearlyBudget.y1) : '—'}</td>
+      <td style="font-family:var(--font-mono);font-size:12px;color:var(--text-secondary)">${fmt(d.yearlyBudget.y2)}</td>
+      <td style="font-family:var(--font-mono);font-size:12px;color:var(--text-secondary)">${fmt(d.yearlyBudget.y3)}</td>
+      <td><span class="amount tier-${d.tier}">${fmt(d.funding)}</span></td>
+      <td style="font-size:12px;color:var(--text-muted)">${d.primaryFocus}</td>
+    </tr>
+  `).join('');
+}
+
+// ══════════════════════════════════
+// RENDER BUDGET OBJECT LIST
+// ══════════════════════════════════
+function renderBudgetObjectList() {
+  const items = [
+    { code: '1000', label: 'Instructional Salaries', desc: 'Faculty stipends, release time, mentor/mentee training compensation' },
+    { code: '2000', label: 'Non-Instructional Salaries', desc: 'Classified staff, HR coordinators, program oversight' },
+    { code: '3000', label: 'Employee Benefits', desc: 'Fringe benefits (21.7% avg), mandatory withholdings' },
+    { code: '4000', label: 'Supplies & Materials', desc: 'VR headsets, office supplies, outreach materials, printing' },
+    { code: '5000', label: 'Other Operating Expenses', desc: 'Consultants, LIFT platform fees, travel, catering, focus groups' },
+    { code: '7000', label: 'Indirect Costs', desc: '~5% of direct costs for grant administration' }
+  ];
+  const el = document.getElementById('budget-object-list');
+  el.innerHTML = items.map(i => `
+    <div class="budget-category">
+      <div>
+        <div style="font-size:11px;font-weight:700;color:var(--accent-blue);font-family:var(--font-mono)">${i.code}</div>
+        <div class="bc-label">${i.label}</div>
+        <div style="font-size:10px;color:var(--text-muted);margin-top:2px;">${i.desc}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ══════════════════════════════════
+// RENDER TIMELINE BARS
+// ══════════════════════════════════
+function renderTimeline() {
+  const container = document.getElementById('timeline-bars');
+  const colors = ['#3b82f6','#22c55e','#f59e0b','#a855f7','#06b6d4','#ef4444'];
+  container.innerHTML = districts.map((d, i) => {
+    const color = colors[i % colors.length];
+    return `
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div style="width:160px;font-size:12px;color:var(--text-secondary);flex-shrink:0;text-align:right;">${d.shortName}</div>
+        <div style="flex:1;">
+          <div class="timeline-bar">
+            <div class="timeline-segment" style="width:8%;background:${color}99;">Q3 25</div>
+            <div class="timeline-segment" style="width:8%;background:${color}bb;">Q4 25</div>
+            <div class="timeline-segment" style="width:12%;background:${color};">Q1 26</div>
+            <div class="timeline-segment" style="width:12%;background:${color};">Q2 26</div>
+            <div class="timeline-segment" style="width:12%;background:${color};">Q3 26</div>
+            <div class="timeline-segment" style="width:12%;background:${color};">Q4 26</div>
+            <div class="timeline-segment" style="width:12%;background:${color};">Q1 27</div>
+            <div class="timeline-segment" style="width:12%;background:${color};">Q2 27</div>
+            <div class="timeline-segment" style="width:12%;background:${color}99;">Q3 27</div>
+          </div>
+        </div>
+        <span class="tier-badge tier-${d.tier}" style="flex-shrink:0">Tier ${d.tier}</span>
+      </div>
+    `;
+  }).join('');
+}
+
+// ══════════════════════════════════
+// RENDER CONTACTS
+// ══════════════════════════════════
+function renderContacts() {
+  const grid = document.getElementById('contacts-grid');
+  grid.innerHTML = districts.flatMap(d => {
+    const cards = [
+      `<div class="contact-card">
+        <div class="district">${d.shortName}</div>
+        <div class="name">${d.contact.name}</div>
+        <div class="role">${d.contact.role}</div>
+        <div class="email">${d.contact.email}</div>
+      </div>`
+    ];
+    if (d.fiscalReporter && d.fiscalReporter.email !== d.contact.email) {
+      cards.push(`<div class="contact-card">
+        <div class="district">${d.shortName} · Fiscal</div>
+        <div class="name">${d.fiscalReporter.name}</div>
+        <div class="role">Institution Project Fiscal Reporter</div>
+        <div class="email">${d.fiscalReporter.email}</div>
+      </div>`);
+    }
+    return cards;
+  }).join('');
+}
+
+// ══════════════════════════════════
+// CHARTS
+// ══════════════════════════════════
+const chartDefaults = {
+  color: 'var(--text-secondary)',
+  borderColor: 'var(--border)',
+};
+
+Chart.defaults.color = '#8b9ec7';
+Chart.defaults.borderColor = '#2a3650';
+
+function initCharts() {
+  // Tier doughnut
+  new Chart(document.getElementById('tierChart'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Tier 1 (7 Districts)', 'Tier 2 / LIFT (4 Districts)'],
+      datasets: [{
+        data: [999997, 400000],
+        backgroundColor: ['#22c55e', '#3b82f6'],
+        borderColor: '#1a2235',
+        borderWidth: 3,
+        hoverOffset: 6
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      cutout: '65%',
+      plugins: {
+        legend: { position: 'bottom', labels: { padding: 16, font: { size: 11 } } },
+        tooltip: {
+          callbacks: {
+            label: ctx => ' ' + ctx.label + ': $' + ctx.raw.toLocaleString()
+          }
+        }
+      }
+    }
+  });
+
+  // Focus area chart
+  new Chart(document.getElementById('focusChart'), {
+    type: 'bar',
+    data: {
+      labels: ['Mentorship', 'Training', 'Hiring Equity', 'Technology', 'Faculty Pipeline', 'Restorative Justice', 'ERGs', 'Data Analytics'],
+      datasets: [{
+        label: 'Districts',
+        data: [7, 8, 4, 2, 1, 1, 1, 2],
+        backgroundColor: ['#3b82f6','#22c55e','#f59e0b','#a855f7','#06b6d4','#ef4444','#f97316','#64748b'],
+        borderRadius: 4,
+        borderSkipped: false
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      indexAxis: 'y',
+      plugins: { legend: { display: false } },
+      scales: {
+        x: {
+          grid: { color: '#2a3650' },
+          ticks: { stepSize: 1, font: { size: 11 } }
+        },
+        y: { grid: { display: false }, ticks: { font: { size: 11 } } }
+      }
+    }
+  });
+
+  // District funding bar
+  new Chart(document.getElementById('districtFundChart'), {
+    type: 'bar',
+    data: {
+      labels: districts.map(d => d.shortName),
+      datasets: [{
+        label: 'Grant Funding',
+        data: districts.map(d => d.funding),
+        backgroundColor: districts.map(d => d.tier === 1 ? '#22c55e' : '#3b82f6'),
+        borderRadius: 4,
+        borderSkipped: false
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: ctx => ' ' + fmt(ctx.raw) } }
+      },
+      scales: {
+        x: { grid: { display: false }, ticks: { font: { size: 10 }, maxRotation: 40, minRotation: 30 } },
+        y: {
+          grid: { color: '#2a3650' },
+          ticks: { callback: v => '$' + (v/1000) + 'K', font: { size: 10 } }
+        }
+      }
+    }
+  });
+
+  // Tier split
+  new Chart(document.getElementById('tierSplitChart'), {
+    type: 'pie',
+    data: {
+      labels: ['Tier 1 (~71.4%)', 'Tier 2 / LIFT (~28.6%)'],
+      datasets: [{
+        data: [999997, 400000],
+        backgroundColor: ['#22c55e', '#3b82f6'],
+        borderColor: '#1a2235',
+        borderWidth: 3,
+        hoverOffset: 4
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'bottom', labels: { padding: 12, font: { size: 10 } } },
+        tooltip: { callbacks: { label: ctx => ' ' + fmt(ctx.raw) } }
+      }
+    }
+  });
+
+  // Category chart
+  new Chart(document.getElementById('categoryChart'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Salaries (1000+2000)', 'Benefits (3000)', 'Supplies (4000)', 'Services (5000)', 'Indirect (7000)'],
+      datasets: [{
+        data: [35, 5, 12, 41, 7],
+        backgroundColor: ['#3b82f6','#22c55e','#f59e0b','#a855f7','#64748b'],
+        borderColor: '#1a2235',
+        borderWidth: 2,
+        hoverOffset: 4
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      cutout: '55%',
+      plugins: {
+        legend: { position: 'right', labels: { padding: 10, font: { size: 10 }, boxWidth: 10 } },
+        tooltip: { callbacks: { label: ctx => ' ' + ctx.label + ': ~' + ctx.raw + '%' } }
+      }
+    }
+  });
+
+  // Outcome categories
+  new Chart(document.getElementById('outcomeCategoryChart'), {
+    type: 'radar',
+    data: {
+      labels: ['Mentorship', 'Training', 'Hiring Reform', 'Technology', 'Restorative Justice', 'Faculty Pipeline'],
+      datasets: [{
+        label: 'District Coverage',
+        data: [7, 8, 5, 4, 2, 3],
+        backgroundColor: 'rgba(59,130,246,0.15)',
+        borderColor: '#3b82f6',
+        borderWidth: 2,
+        pointBackgroundColor: '#3b82f6',
+        pointRadius: 4
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        r: {
+          grid: { color: '#2a3650' },
+          ticks: { display: false },
+          pointLabels: { font: { size: 11 }, color: '#8b9ec7' },
+          min: 0, max: 10
+        }
+      }
+    }
+  });
+
+  // Employee groups
+  new Chart(document.getElementById('employeeGroupChart'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Faculty', 'Classified Staff', 'Administrators', 'Students', 'All Employees'],
+      datasets: [{
+        data: [8, 9, 5, 2, 7],
+        backgroundColor: ['#3b82f6','#22c55e','#f59e0b','#a855f7','#06b6d4'],
+        borderColor: '#1a2235',
+        borderWidth: 3,
+        hoverOffset: 6
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      cutout: '60%',
+      plugins: {
+        legend: { position: 'bottom', labels: { padding: 12, font: { size: 11 }, boxWidth: 12 } }
+      }
+    }
+  });
+
+  // Budget breakdown
+  new Chart(document.getElementById('budgetBreakdownChart'), {
+    type: 'bar',
+    data: {
+      labels: ['Allan Hancock','Antelope Valley','Citrus CCD','Kern CCD','Mt. SAC','North Orange','Peralta','San Diego','Santa Monica','State Center','West Valley-Mission'],
+      datasets: [
+        { label: 'Salaries (1000+2000)', data: [46080,43085,18000,32660,79925,14127,57420,62370,40000,95000,57420], backgroundColor: '#3b82f6', borderRadius: 2 },
+        { label: 'Benefits (3000)', data: [9999,0,1060,7074,6576,0,8280,0,0,0,8280], backgroundColor: '#22c55e', borderRadius: 2 },
+        { label: 'Supplies/Equip (4000)', data: [1159,0,0,90750,14857,8000,0,2605,0,0,0], backgroundColor: '#f59e0b', borderRadius: 2 },
+        { label: 'Services (5000)', data: [38000,56915,74940,12020,41500,120000,29300,77880,102857,47857,34300], backgroundColor: '#a855f7', borderRadius: 2 },
+        { label: 'Indirect (7000)', data: [4762,0,5000,7496,7142,7142,5000,7142,7143,7143,0], backgroundColor: '#64748b', borderRadius: 2 },
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'top', labels: { font: { size: 10 }, padding: 10, boxWidth: 10 } },
+        tooltip: { callbacks: { label: ctx => ' ' + ctx.dataset.label + ': ' + fmt(ctx.raw) } }
+      },
+      scales: {
+        x: { stacked: true, grid: { display: false }, ticks: { font: { size: 9 }, maxRotation: 45, minRotation: 30 } },
+        y: { stacked: true, grid: { color: '#2a3650' }, ticks: { callback: v => '$' + (v/1000) + 'K', font: { size: 10 } } }
+      }
+    }
+  });
+}
+
+// ══════════════════════════════════
+// INIT
+// ══════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  renderOverviewTable();
+  renderAllocationTable();
+  renderDistrictCards('all');
+  renderOutcomes();
+  renderBudgetAnnual();
+  renderBudgetObjectList();
+  renderTimeline();
+  renderContacts();
+  initCharts();
+});
+</script>
+</body>
+</html>
