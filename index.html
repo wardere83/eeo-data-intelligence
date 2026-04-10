@@ -2491,6 +2491,13 @@ function renderTimeline() {
             <div class="timeline-bar-inner timeline-bar-bg"><div class="timeline-bar-fill y2" style="width:${pct(d.yearlyBudget.y2)}%"></div></div>
             <div class="timeline-bar-label">${fmt(d.yearlyBudget.y2)}</div>
           </div>
+          </div>
+        </div>
+        <div class="timeline-total">${fmt(total)}</div>
+      </div>
+    `;
+  }).join('');
+}
           ═══════════════════════════
 // RENDER CONTACTS
 // ══════════════════════════════════
