@@ -1322,8 +1322,6 @@
             <button class="lang-option" onclick="setLang('es')"><span class="lang-flag">🇲🇽</span><span class="lang-name">Spanish</span><span class="lang-native">Español</span></button>
             <button class="lang-option" onclick="setLang('vi')"><span class="lang-flag">🇻🇳</span><span class="lang-name">Vietnamese</span><span class="lang-native">Tiếng Việt</span></button>
             <button class="lang-option" onclick="setLang('ar')"><span class="lang-flag">🇸🇦</span><span class="lang-name">Arabic</span><span class="lang-native">العربية</span></button>
-            <button class="lang-option" onclick="setLang('so')"><span class="lang-flag">🇸🇴</span><span class="lang-name">Somali</span><span class="lang-native">Soomaali</span></button>
-            <button class="lang-option" onclick="setLang('am')"><span class="lang-flag">🇪🇹</span><span class="lang-name">Amharic</span><span class="lang-native">አማርኛ</span></button>
             <button class="lang-option" onclick="setLang('tl')"><span class="lang-flag">🇵🇭</span><span class="lang-name">Tagalog</span><span class="lang-native">Tagalog</span></button>
           </div>
         </div>
@@ -2059,76 +2057,6 @@ const translations = {
     tl_y1:'السنة 1 (25-26)', tl_y2:'السنة 2 (26-27)', tl_y3:'السنة 3 (27-28)',
     contacts_title:'جهات اتصال المقاطعة', contacts_sub:'قادة المشروع والبدلاء ومراسلو الميزانية',
   },
-  so: {
-    nav_overview:'Guud ahaan', nav_funds:'Maalgelinta', nav_districts:'Degmooyinka',
-    nav_outcomes:'Natiijooyin', nav_budget:'Miisaaniyad', nav_timeline:'Jadwalka', nav_contacts:'Xiriirka',
-    topbar_title:'Macluumaadka EEO',
-    overview_title:'Guud ahaan Barnaamijka',
-    overview_sub:'Koobid heerka gobolka ee deeq EEO IBP oo ka sareysa 11 degmo jaamacadood',
-    meta_monitor:'Kormeeraha Deeqda', meta_grantid:'ID Deeqda', meta_start:'Bilowga', meta_duration:'Muddada', meta_status:'Xaaladda',
-    kpi_total_funding:'Wadarta Maalgelinta', kpi_across:'Ka sareysa 11 degmo',
-    kpi_total_districts:'Wadarta Degmooyinka', kpi_all_submitted:'Dhammaan la gudbiyay',
-    kpi_tier1:'Degmooyinka Heerka 1', kpi_tier1_sub:'$150K mid kasta (celcel)',
-    kpi_tier2:'Degmooyinka Heerka 2', kpi_tier2_sub:'$100K mid kasta (LIFT)',
-    kpi_lift:'Isbahaysiga LIFT', kpi_focus:'Meelaha Xoogga', kpi_focus_sub:'Hagida · Tababarka · Shaqaaleysiinta · Teknolojiyada',
-    lift_title:'Isbahaysiga LIFT — Machadka Hoggaanka Mustaqbalka',
-    lift_desc:'Afar ka mid ah 11 degmo waa xubnaha isbahaysiga gobolka ee aan horey u dhicin ee 10 jaamacadood-10 gobol.',
-    chart_tier_dist:'Qeybinta Maalgelinta Heerka', chart_total_dist:'Qeybinta Guud',
-    chart_focus_areas:'Meelaha Xoogga Barnaamijka', chart_by_type:'Nooca Hindisaha',
-    table_district_summary:'Kooban Degmooyinka',
-    th_district:'Degmada', th_tier:'Heerka', th_funding:'Maalgelin', th_indirect:'Toos Maaha', th_focus:'Xoogga Ugu Muhiimsan', th_total:'Wadarta',
-    funds_title:'Qeybinta Maalgalinta', funds_sub:'Faahfaahinta qeybinta deeqda dhammaan 11 degmo',
-    kpi_total_allocated:'Wadarta La Qeybiyay', kpi_all_11:'Dhammaan 11 degmo',
-    kpi_tier1_total:'Wadarta Heerka 1', kpi_7dist:'7 degmo',
-    kpi_tier2_total:'Wadarta Heerka 2', kpi_4dist:'4 degmo × $100K',
-    kpi_indirect_total:'Wadarta Toos Maaha', kpi_indirect_sub:'Celceliska 4.8% kharashyada tooska ah',
-    chart_funding_district:'Maalgalinta Degmo', chart_direct:'Qeybinta Tooska',
-    chart_tier_split:'Kala Qaybinta Heerka', chart_indirect:'Heerarka Kharashka Toos Maaha', chart_pct:'Boqolkiiba Degmo',
-    table_alloc_detail:'Faahfaahinta Qeybinta Heerka Degmada',
-    districts_title:'Xogta Degmooyinka', districts_sub:'Dhammaan 11 degmo jaamacadood ee ka qaybgalaya',
-    filter_by:'Ka saar:', filter_all:'Dhammaan', filter_tier1:'Heerka 1', filter_tier2:'Heerka 2', filter_lift:'Isbahaysiga LIFT',
-    outcomes_title:'Natiijooyinka Barnaamijka', outcomes_sub:'Natiijooyinka la cabiri karo ee hortaaga degmo kasta',
-    budget_title:'Faahfaahinta Miisaaniyada', budget_sub:'Kharashyada code-ka shayga',
-    timeline_title:'Jadwalka Fulinta', timeline_sub:'Qaybinta miisaaniyada 3-sano',
-    chart_yearly:'Sifooyinka Kharashka Sanadlaha', chart_all_districts:'Dhammaan Degmooyinka',
-    tl_y1:'Sanadka 1 (25-26)', tl_y2:'Sanadka 2 (26-27)', tl_y3:'Sanadka 3 (27-28)',
-    contacts_title:'Xiriirka Degmada', contacts_sub:'Hogaamiyayaasha mashaariicda, beddelka, iyo mukhbirayaasha xisaabaadka',
-  },
-  am: {
-    nav_overview:'አጠቃላይ እይታ', nav_funds:'የፈንድ ምደባ', nav_districts:'ዲስትሪክቶች',
-    nav_outcomes:'ውጤቶች', nav_budget:'በጀት', nav_timeline:'ጊዜ ሰሌዳ', nav_contacts:'ግንኙነቶች',
-    topbar_title:'የ EEO ዳታ ኢንተሊጀንስ',
-    overview_title:'የፕሮግራም አጠቃላይ እይታ',
-    overview_sub:'በ11 የጋራ ኮሌጆች ዲስትሪክቶች ላይ ለ EEO IBP ዕርዳታ የስቴት አጠቃላይ ማጠቃለያ',
-    meta_monitor:'የዕርዳታ ተቆጣጣሪ', meta_grantid:'የዕርዳታ መለያ', meta_start:'መጀመሪያ', meta_duration:'ጊዜ', meta_status:'ሁኔታ',
-    kpi_total_funding:'ጠቅላላ የዕርዳታ ፈንድ', kpi_across:'በ11 ዲስትሪክቶች',
-    kpi_total_districts:'ጠቅላላ ዲስትሪክቶች', kpi_all_submitted:'ሁሉም ቀርበዋል',
-    kpi_tier1:'ደረጃ 1 ዲስትሪክቶች', kpi_tier1_sub:'ለእያንዳንዱ $150K (ዝቅተኛ)',
-    kpi_tier2:'ደረጃ 2 ዲስትሪክቶች', kpi_tier2_sub:'ለእያንዳንዱ $100K (LIFT)',
-    kpi_lift:'የ LIFT ህብረት', kpi_focus:'የትኩረት አካባቢዎች', kpi_focus_sub:'አማካሪነት · ስልጠና · ቅጥር · ቴክኖሎጂ',
-    lift_title:'LIFT ህብረት — ለወደፊቱ የአመራር ተቋም',
-    lift_desc:'ከ11 ዲስትሪክቶች ውስጥ አራቱ — ፀረ-ዘውጌ Valley CCD፣ Citrus CCD፣ Peralta CCD፣ እና West Valley-Mission CCD — ታይቶ ያልታወቀ የ10 ኮሌጅ-10 ክልል ህብረት አባላት ናቸው።',
-    chart_tier_dist:'በደረጃ የፈንድ ምደባ', chart_total_dist:'ጠቅላላ ስርጭት',
-    chart_focus_areas:'የፕሮግራም ትኩረት አካባቢዎች', chart_by_type:'በተነሳሽነት አይነት',
-    table_district_summary:'የዲስትሪክት ማጠቃለያ',
-    th_district:'ዲስትሪክት', th_tier:'ደረጃ', th_funding:'ፈንድ', th_indirect:'ቀጥተኛ ያልሆነ', th_focus:'ዋና ትኩረት', th_total:'ጠቅላላ',
-    funds_title:'የፈንድ ምደባ', funds_sub:'በ11 ዲስትሪክቶች ላይ ዝርዝር የዕርዳታ ፈንድ ትንተና',
-    kpi_total_allocated:'ጠቅላላ የተመደበ', kpi_all_11:'ሁሉም 11 ዲስትሪክቶች',
-    kpi_tier1_total:'ደረጃ 1 ጠቅላላ', kpi_7dist:'7 ዲስትሪክቶች',
-    kpi_tier2_total:'ደረጃ 2 ጠቅላላ', kpi_4dist:'4 ዲስትሪክቶች × $100K',
-    kpi_indirect_total:'ጠቅላላ ቀጥተኛ ያልሆነ', kpi_indirect_sub:'ዝቅ. 4.8% ቀጥተኛ ወጪ',
-    chart_funding_district:'ፈንድ በዲስትሪክት', chart_direct:'ቀጥተኛ ምደባ',
-    chart_tier_split:'የደረጃ ክፍፍል', chart_indirect:'ቀጥተኛ ያልሆነ ወጪ ምጣኔ', chart_pct:'በ% ዲስትሪክት',
-    table_alloc_detail:'በዲስትሪክት ደረጃ ዝርዝር ምደባ',
-    districts_title:'የዲስትሪክት መገለጫዎች', districts_sub:'ሁሉም 11 የሚሳተፉ ዲስትሪክቶች',
-    filter_by:'ማጣሪያ:', filter_all:'ሁሉም', filter_tier1:'ደረጃ 1', filter_tier2:'ደረጃ 2', filter_lift:'LIFT ህብረት',
-    outcomes_title:'የፕሮግራም ውጤቶች', outcomes_sub:'ከእያንዳንዱ ዲስትሪክት ሃሳብ ሊለኩ የሚችሉ ውጤቶች',
-    budget_title:'የበጀት ትንተና', budget_sub:'የዕቃ ኮድ ወጪዎች',
-    timeline_title:'የትግበራ ጊዜ ሰሌዳ', timeline_sub:'ለ3 ዓመት የበጀት ስርጭት',
-    chart_yearly:'ዓመት በዓመት የወጪ ምስል', chart_all_districts:'ሁሉም ዲስትሪክቶች',
-    tl_y1:'ዓመት 1 (25-26)', tl_y2:'ዓመት 2 (26-27)', tl_y3:'ዓመት 3 (27-28)',
-    contacts_title:'የዲስትሪክት ግንኙነቶች', contacts_sub:'የፕሮጀክት መሪዎች፣ ምትክ፣ እና የፋይናንስ ሪፖርተሮች',
-  },
   tl: {
     nav_overview:'Pangkalahatang-tanaw', nav_funds:'Pagbibigay-pondo', nav_districts:'Mga Distrito',
     nav_outcomes:'Mga Resulta', nav_budget:'Badyet', nav_timeline:'Iskedyul', nav_contacts:'Mga Kontak',
@@ -2186,11 +2114,11 @@ function setLang(lang) {
   const chosen = document.querySelector(`.lang-option[onclick="setLang('${lang}')"]`);
   if (chosen) chosen.classList.add('active');
   // Update button label
-  const names = { en:'English', es:'Español', vi:'Tiếng Việt', ar:'العربية', so:'Soomaali', am:'አማርኛ', tl:'Tagalog' };
+  const names = { en:'English', es:'Español', vi:'Tiếng Việt', ar:'العربية', tl:'Tagalog' };
   document.getElementById('transLabel').textContent = lang === 'en' ? 'Translate' : names[lang];
   // Show/hide banner
   const banner = document.getElementById('transBanner');
-  const fullNames = { en:'English', es:'Spanish (Español)', vi:'Vietnamese (Tiếng Việt)', ar:'Arabic (العربية)', so:'Somali (Soomaali)', am:'Amharic (አማርኛ)', tl:'Tagalog' };
+  const fullNames = { en:'English', es:'Spanish (Español)', vi:'Vietnamese (Tiếng Việt)', ar:'Arabic (العربية)', tl:'Tagalog' };
   if (lang !== 'en') {
     banner.classList.add('show');
     document.getElementById('transLangName').textContent = fullNames[lang];
