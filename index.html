@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>EEO Data Intelligence | 2026-2028 IBP Grant Initiative</title>
+  <title>EEO Data Intelligence | 2026-2028 IBP Grant Initiative</title>lcu
   <meta name="description" content="Project management intelligence dashboard for the EEO Innovative Best Practices Grant Initiative — monitoring fund allocations, outcomes, and progress across 11 California Community College Districts." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin /> 
@@ -1203,6 +1203,54 @@
     }
 
     /* ══════════════════════════════════════════════════
+   SPEND-DOWN MONITOR SECTION
+══════════════════════════════════════════════════ */
+.spend-kpi-row { display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:14px; margin-bottom:24px; }
+.underspend-alert { background:linear-gradient(135deg,#fff5f5 0%,#ffe8e8 100%); border:1.5px solid #e53e3e; border-radius:var(--radius-lg); padding:16px 20px; margin-bottom:20px; }
+[data-theme="dark"] .underspend-alert { background:rgba(229,62,62,0.12); border-color:#fc8181; }
+.underspend-alert-header { display:flex; align-items:center; gap:10px; margin-bottom:12px; }
+.underspend-alert-icon { width:36px; height:36px; background:#e53e3e; border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.underspend-alert-icon svg { color:#fff; }
+.underspend-alert-title { font-size:15px; font-weight:700; color:#c53030; }
+[data-theme="dark"] .underspend-alert-title { color:#fc8181; }
+.underspend-alert-sub { font-size:12px; color:#742a2a; margin-top:2px; }
+[data-theme="dark"] .underspend-alert-sub { color:#feb2b2; }
+.underspend-table { width:100%; font-size:13px; border-collapse:collapse; }
+.underspend-table th { font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:#742a2a; padding:8px 12px; text-align:left; border-bottom:1.5px solid #fc8181; background:rgba(229,62,62,0.08); }
+[data-theme="dark"] .underspend-table th { color:#feb2b2; background:rgba(229,62,62,0.15); border-color:#c53030; }
+.underspend-table td { padding:9px 12px; border-bottom:1px solid rgba(229,62,62,0.2); vertical-align:middle; }
+.underspend-table tr:last-child td { border-bottom:none; }
+.underspend-table tr:hover td { background:rgba(229,62,62,0.05); }
+.risk-badge { display:inline-flex; align-items:center; gap:4px; padding:3px 9px; border-radius:20px; font-size:11px; font-weight:700; white-space:nowrap; }
+.risk-badge.high { background:rgba(229,62,62,0.15); color:#c53030; }
+.risk-badge.medium { background:rgba(255,182,0,0.18); color:#92610a; }
+.risk-badge.low { background:rgba(26,122,60,0.12); color:#1a7a3c; }
+[data-theme="dark"] .risk-badge.high { background:rgba(229,62,62,0.25); color:#fc8181; }
+[data-theme="dark"] .risk-badge.medium { background:rgba(255,182,0,0.22); color:#fbd38d; }
+[data-theme="dark"] .risk-badge.low { background:rgba(76,175,114,0.2); color:#4CAF72; }
+.spend-row-table { width:100%; font-size:13px; border-collapse:collapse; }
+.spend-row-table th { font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--text-muted); padding:10px 14px; text-align:left; border-bottom:2px solid var(--border); background:var(--bg-surface-2); white-space:nowrap; }
+.spend-row-table td { padding:11px 14px; border-bottom:1px solid var(--border); vertical-align:middle; }
+.spend-row-table tr:last-child td { border-bottom:none; }
+.spend-row-table tr:hover td { background:var(--bg-surface-2); }
+.spend-bar-track { background:var(--border); border-radius:4px; height:8px; overflow:hidden; min-width:80px; }
+.spend-bar-fill { height:100%; border-radius:4px; transition:width .6s ease; }
+.spend-bar-fill.on-track { background:var(--success); }
+.spend-bar-fill.caution { background:var(--ccc-gold); }
+.spend-bar-fill.at-risk { background:#e53e3e; }
+.spend-summary-strip { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:20px; }
+.spend-strip-item { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-md); padding:12px 16px; flex:1; min-width:140px; display:flex; flex-direction:column; gap:3px; box-shadow:var(--shadow-sm); }
+.spend-strip-label { font-size:10px; font-weight:700; letter-spacing:.07em; text-transform:uppercase; color:var(--text-muted); }
+.spend-strip-val { font-family:var(--font-display); font-size:22px; font-weight:600; line-height:1; }
+.spend-strip-val.danger { color:#e53e3e; }
+.spend-strip-val.warn { color:var(--ccc-dark-gold); }
+.spend-strip-val.ok { color:var(--success); }
+.spend-period-tabs { display:flex; gap:6px; margin-bottom:16px; }
+.spend-period-tab { padding:5px 14px; border-radius:20px; font-size:12px; font-weight:600; border:1.5px solid var(--border-strong); background:var(--bg-card); color:var(--text-secondary); cursor:pointer; transition:all var(--transition); }
+.spend-period-tab:hover { border-color:var(--ccc-medium-blue); color:var(--ccc-medium-blue); }
+.spend-period-tab.active { background:var(--ccc-dark-blue); color:#fff; border-color:var(--ccc-dark-blue); }
+[data-theme="dark"] .spend-period-tab.active { background:var(--accent-light); color:var(--ccc-dark-blue); border-color:var(--accent-light); }
+    /* ══════════════════════════════════════════════════
        TRANSLATION BANNER
     ══════════════════════════════════════════════════ */
     .translation-active-bar {
@@ -1287,6 +1335,11 @@
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
       Contacts
     </button>
+              <div class="sidebar-section-label">Spend Monitor</div>
+              <button class="nav-item" onclick="showSection('spenddown',this)" data-i18n="nav_spenddown">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                            Spend-Down Monitor
+                          </button>
 
     <div class="sidebar-footer">
       <div class="sidebar-footer-label">Grant Monitor</div>
@@ -1646,8 +1699,59 @@
         <div class="contacts-grid" id="contacts-grid"></div>
       </div>
 
+            <!-- SPEND-DOWN MONITOR SECTION -->
+            <div id="section-spenddown" class="section">
+                      <div class="page-header">
+                                  <h2>Spend-Down Monitor</h2>
+                                  <p>Track grant expenditures, year-by-year burn rates, and flag districts at risk of underspending</p>
+                                </div>
+
+                      <!-- KPI Summary Row -->
+                      <div class="alloc-kpi-row" id="spend-kpi-row"></div>
+
+                      <!-- Underspend Alert Section -->
+                      <div class="card mb-24" id="underspend-alert-card">
+                                  <div class="card-header" style="background:rgba(229,62,62,0.08);border-bottom:2px solid rgba(229,62,62,0.25);">
+                                                <div class="card-title" style="color:#c53030;display:flex;align-items:center;gap:8px;">
+                                                                &#9888; Underspend Risk Alerts
+                                                              </div>
+                                                <span id="underspend-count" class="risk-badge high">Calculating...</span>
+                                              </div>
+                                  <div class="card-body">
+                                                <div id="underspend-list"></div>
+                                              </div>
+                                </div>
+
+                      <!-- Spend-Down Detail Table -->
+                      <div class="card">
+                                  <div class="card-header">
+                                                <div class="card-title">District Spend-Down Detail</div>
+                                                <div class="chart-label">Allocations vs. Year-by-Year Spend</div>
+                                              </div>
+                                  <div class="data-table-wrap">
+                                                <table class="data-table" id="spend-table">
+                                                                <thead>
+                                                                                  <tr>
+                                                                                                      <th>District</th>
+                                                                                                      <th>Total Grant</th>
+                                                                                                      <th>Year 1 Budget</th>
+                                                                                                      <th>Year 2 Budget</th>
+                                                                                                      <th>Year 3 Budget</th>
+                                                                                                      <th>Y1 % of Total</th>
+                                                                                                      <th>Spend Pace</th>
+                                                                                                      <th>Status</th>
+                                                                                                    </tr>
+                                                                                </thead>
+                                                                <tbody id="spend-table-body"></tbody>
+                                                              </table>
+                                              </div>
+                                </div>
+                    </div>
+
     </main>
   </div>
+
+  
 
   <!-- MOBILE BOTTOM NAV -->
   <nav class="mobile-nav" aria-label="Mobile navigation">
@@ -1672,6 +1776,10 @@
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
         <span data-i18n="nav_contacts">Contacts</span>
       </button>
+            <button class="mobile-nav-btn" onclick="showSection('spenddown',this,true)" data-mobile-nav>
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                      <span data-i18n="nav_spenddown">Spend</span>
+                    </button>
     </div>
   </nav>
 </div>
@@ -1951,10 +2059,12 @@ const translations = {
     chart_yearly:'Year-by-Year Spend Profile', chart_all_districts:'All Districts',
     tl_y1:'Year 1 (25-26)', tl_y2:'Year 2 (26-27)', tl_y3:'Year 3 (27-28)',
     contacts_title:'District Contacts', contacts_sub:'Project leads, alternates, and fiscal reporters',
+        nav_spenddown:'Spend-Down Monitor',
   },
   es: {
     nav_overview:'Resumen', nav_funds:'Asignaciones', nav_districts:'Distritos',
     nav_outcomes:'Resultados', nav_budget:'Presupuesto', nav_timeline:'Cronograma', nav_contacts:'Contactos',
+        nav_spenddown:'Spend-Down Monitor',
     topbar_title:'Inteligencia de Datos EEO',
     overview_title:'Resumen del Programa',
     overview_sub:'Resumen estatal de la subvención EEO de Mejores Prácticas Innovadoras en 11 distritos de colegios comunitarios',
@@ -2551,6 +2661,88 @@ function initCharts() {
 }
 
 // ══════════════════════════════════
+
+  // ══════════════════════════════════
+  // SPEND-DOWN MONITOR
+  // ══════════════════════════════════
+  function renderSpendDown() {
+      const totalGrant = districts.reduce((a,d)=>a+d.funding,0);
+      const totalY1 = districts.reduce((a,d)=>a+d.yearlyBudget.y1,0);
+      const totalY2 = districts.reduce((a,d)=>a+d.yearlyBudget.y2,0);
+      const totalY3 = districts.reduce((a,d)=>a+d.yearlyBudget.y3,0);
+
+      // KPI Row
+      const kpiRow = document.getElementById('spend-kpi-row');
+      if (kpiRow) { kpiRow.innerHTML = `
+          <div class="kpi-card"><div class="kpi-accent-bar blue"></div><div class="kpi-label">Total Grant</div><div class="kpi-value blue">${fmt(totalGrant)}</div><div class="kpi-sub">All 11 districts</div></div>
+              <div class="kpi-card"><div class="kpi-accent-bar medium-blue"></div><div class="kpi-label">Year 1 Budget</div><div class="kpi-value medium-blue">${fmt(totalY1)}</div><div class="kpi-sub">${((totalY1/totalGrant)*100).toFixed(1)}% of total grant</div></div>
+                  <div class="kpi-card"><div class="kpi-accent-bar gold"></div><div class="kpi-label">Year 2 Budget</div><div class="kpi-value gold">${fmt(totalY2)}</div><div class="kpi-sub">${((totalY2/totalGrant)*100).toFixed(1)}% of total grant</div></div>
+                      <div class="kpi-card"><div class="kpi-accent-bar grey"></div><div class="kpi-label">Year 3 Budget</div><div class="kpi-value grey">${fmt(totalY3)}</div><div class="kpi-sub">${((totalY3/totalGrant)*100).toFixed(1)}% of total grant</div></div>
+                        `; }
+
+      // Underspend detection: flag districts where Y1 < 15% of total (slow start)
+      const underspendDistricts = districts.filter(d => {
+            const y1Pct = (d.yearlyBudget.y1 / d.funding) * 100;
+            const y2Pct = (d.yearlyBudget.y2 / d.funding) * 100;
+            // Flag: Y1 < 15% is a slow start; Y2 < 40% cumulative is concerning
+            return y1Pct < 15 || y2Pct < 30;
+          });
+
+      // Render underspend alerts
+      const countEl = document.getElementById('underspend-count');
+      if (countEl) {
+            countEl.textContent = underspendDistricts.length + ' District' + (underspendDistricts.length !== 1 ? 's' : '') + ' Flagged';
+            countEl.style.background = underspendDistricts.length === 0 ? '#1a7a3c' : '#c53030';
+            countEl.style.color = '#fff';
+            countEl.style.padding = '3px 10px';
+            countEl.style.borderRadius = '20px';
+            countEl.style.fontSize = '12px';
+            countEl.style.fontWeight = '700';
+          }
+
+      const listEl = document.getElementById('underspend-list');
+      if (listEl) {
+            if (underspendDistricts.length === 0) {
+                    listEl.innerHTML = '<div style="padding:16px;color:var(--success);font-weight:600;">&#10003; All districts are on track — no underspend risks detected.</div>';
+                  } else {
+                    listEl.innerHTML = underspendDistricts.map(d => {
+                              const y1Pct = ((d.yearlyBudget.y1/d.funding)*100).toFixed(1);
+                              const y2Pct = ((d.yearlyBudget.y2/d.funding)*100).toFixed(1);
+                              const risk = parseFloat(y1Pct) < 10 ? 'HIGH RISK' : 'MONITOR';
+                              const riskColor = risk === 'HIGH RISK' ? '#c53030' : '#D18A00';
+                              return `<div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--border);">
+                                        <div><strong>${d.shortName}</strong><br><span style="font-size:12px;color:var(--text-muted)">${d.program.slice(0,60)}...</span></div>
+                                                  <div style="text-align:right;min-width:200px;">
+                                                              <span style="background:${riskColor};color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">${risk}</span><br>
+                                                                          <span style="font-size:12px;color:var(--text-muted)">Y1: ${y1Pct}% | Y2: ${y2Pct}% | Total: ${fmt(d.funding)}</span>
+                                                                                    </div>
+                                                                                            </div>`;
+                            }).join('');
+                  }
+          }
+
+      // Render spend-down detail table
+      const tbody = document.getElementById('spend-table-body');
+      if (tbody) { tbody.innerHTML = districts.map(d => {
+            const y1P = ((d.yearlyBudget.y1/d.funding)*100).toFixed(1);
+            const cumulative = d.yearlyBudget.y1 + d.yearlyBudget.y2;
+            const cumPct = ((cumulative/d.funding)*100).toFixed(1);
+            const isRisk = parseFloat(y1P) < 15 || parseFloat(cumPct) < 60;
+            const statusColor = isRisk ? '#c53030' : '#1a7a3c';
+            const statusText = isRisk ? '&#9888; Risk' : '&#10003; On Track';
+            const pace = parseFloat(y1P) < 10 ? 'Slow' : parseFloat(y1P) < 20 ? 'Moderate' : 'On Track';
+            return `<tr>
+                  <td><strong>${d.shortName}</strong><br><span style="font-size:11px;color:var(--text-muted)">${d.tier === 1 ? 'Tier 1' : 'Tier 2 / LIFT'}</span></td>
+                        <td class="amount">${fmt(d.funding)}</td>
+                              <td class="amount">${fmt(d.yearlyBudget.y1)} <span style="font-size:11px;color:var(--text-muted)">(${y1P}%)</span></td>
+                                    <td class="amount">${fmt(d.yearlyBudget.y2)}</td>
+                                          <td class="amount">${fmt(d.yearlyBudget.y3)}</td>
+                                                <td><div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:${y1P}%;background:${isRisk?'#c53030':'var(--ccc-medium-blue)'}"></div></div><span style="font-size:11px">${y1P}%</span></td>
+                                                      <td><span style="font-size:12px;font-weight:600;color:${isRisk?'#D18A00':'var(--ccc-medium-blue)'}">${pace}</span></td>
+                                                            <td><span style="background:${statusColor};color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;white-space:nowrap">${statusText}</span></td>
+                                                                </tr>`;
+          }).join(''); }
+    }
 // INIT
 // ══════════════════════════════════
 document.addEventListener('DOMContentLoaded', () => {
@@ -2561,6 +2753,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderBudget();
   renderTimeline();
   renderContacts();
+      renderSpendDown();
   // Init charts on next frame
   requestAnimationFrame(() => initCharts());
 });
