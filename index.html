@@ -1703,54 +1703,77 @@
             <div id="section-spenddown" class="section">
                       <div class="page-header">
                                   <h2>Spend-Down Monitor</h2>
-                                  <p>Track grant expenditures, year-by-year burn rates, and flag districts at risk of underspending</p>
-                                </div>
+                                  <!-- SPEND-DOWN MONITOR SECTION -->
+                              <div id="section-spenddown" class="section">
+                                        <div class="page-header">
+                                                    <h2>Spend-Down Monitor</h2>
+                                                    <p>EEO IBP Grant Portfolio · Allocations, expenditure tracking, and underspend risk alerts for leadership</p>
+                                                  </div>
 
-                      <!-- KPI Summary Row -->
-                      <div class="alloc-kpi-row" id="spend-kpi-row"></div>
+                                        <!-- Portfolio Health Banner -->
+                                        <div class="alliance-banner" id="portfolio-health-banner">
+                                                    <div class="alliance-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+                                                    <div class="alliance-text" id="portfolio-banner-text">
+                                                                  <strong id="portfolio-status-title">Portfolio Health</strong>
+                                                                  <p id="portfolio-status-desc">Loading spend data...</p>
+                                                                </div>
+                                                  </div>
 
-                      <!-- Underspend Alert Section -->
-                      <div class="card mb-24" id="underspend-alert-card">
-                                  <div class="card-header" style="background:rgba(229,62,62,0.08);border-bottom:2px solid rgba(229,62,62,0.25);">
-                                                <div class="card-title" style="color:#c53030;display:flex;align-items:center;gap:8px;">
-                                                                &#9888; Underspend Risk Alerts
-                                                              </div>
-                                                <span id="underspend-count" class="risk-badge high">Calculating...</span>
-                                              </div>
-                                  <div class="card-body">
-                                                <div id="underspend-list"></div>
-                                              </div>
-                                </div>
+                                        <!-- KPI Summary Row -->
+                                        <div class="alloc-kpi-row" id="spend-kpi-row"></div>
 
-                      <!-- Spend-Down Detail Table -->
-                      <div class="card">
-                                  <div class="card-header">
-                                                <div class="card-title">District Spend-Down Detail</div>
-                                                <div class="chart-label">Allocations vs. Year-by-Year Spend</div>
-                                              </div>
-                                  <div class="data-table-wrap">
-                                                <table class="data-table" id="spend-table">
-                                                                <thead>
-                                                                                  <tr>
-                                                                                                      <th>District</th>
-                                                                                                      <th>Total Grant</th>
-                                                                                                      <th>Year 1 Budget</th>
-                                                                                                      <th>Year 2 Budget</th>
-                                                                                                      <th>Year 3 Budget</th>
-                                                                                                      <th>Y1 % of Total</th>
-                                                                                                      <th>Spend Pace</th>
-                                                                                                      <th>Status</th>
-                                                                                                    </tr>
-                                                                                </thead>
-                                                                <tbody id="spend-table-body"></tbody>
-                                                              </table>
-                                              </div>
-                                </div>
-                    </div>
+                                        <!-- Underspend Alert Section -->
+                                            <!-- District Selector for Underspend Flagging -->
+                        <div class="card mb-24">
+                          <div class="card-header">
+                            <div>
+                              <div class="card-title">Flag Districts for Underspend Review</div>
+                              <div style="font-size:12px;color:var(--text-muted);margin-top:2px;">Click a district to add or remove it from the underspend watch list</div>
+                            </div>
+                          </div>
+                          <div class="card-body" style="padding:14px 16px;">
+                            <div id="underspend-selector" style="display:flex;flex-wrap:wrap;gap:6px;"></div>
+                          </div>
+                        </div>
+                                        <div class="card mb-24" id="underspend-alert-card">
+                                                    <div class="card-header" style="background:rgba(229,62,62,0.07);border-bottom:2px solid rgba(229,62,62,0.2);">
+                                                                  <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:18px;">&#9888;</span><span class="card-title" style="color:#c53030;">Underspend Risk Alerts</span></div>
+                                                                  <span id="underspend-count" style="background:#c53030;color:#fff;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:700;">Calculating...</span>
+                                                                </div>
+                                                    <div class="card-body" style="padding:0;">
+                                                                  <div id="underspend-list"></div>
+                                                                </div>
+                                                  </div>
 
-    </main>
-  </div>
-
+                                        <!-- District Spend-Down Detail Table -->
+                                        <div class="card">
+                                                    <div class="card-header">
+                                                                  <div>
+                                                                                  <div class="card-title">District Spend-Down Tracker</div>
+                                                                                  <div class="chart-label" style="margin-top:2px;">Budget allocations by year · Burn rate · Underspend risk status</div>
+                                                                                </div>
+                                                                  <div style="font-size:12px;color:var(--text-muted);">As of Grant Year 1 Start · Q3 2025–26</div>
+                                                                </div>
+                                                    <div class="data-table-wrap">
+                                                                  <table class="data-table" id="spend-table">
+                                                                                  <thead>
+                                                                                                    <tr>
+                                                                                                                        <th>District</th>
+                                                                                                                        <th>Tier</th>
+                                                                                                                        <th>Total Allocation</th>
+                                                                                                                        <th>Year 1 Budget</th>
+                                                                                                                        <th>Year 2 Budget</th>
+                                                                                                                        <th>Year 3 Budget</th>
+                                                                                                                        <th>Y1 Burn Rate</th>
+                                                                                                                        <th>Spend Pace</th>
+                                                                                                                        <th>Risk Status</th>
+                                                                                                                      </tr>
+                                                                                                  </thead>
+                                                                                  <tbody id="spend-table-body"></tbody>
+                                                                                </table>
+                                                                </div>
+                                                  </div>
+                                      </div>
   
 
   <!-- MOBILE BOTTOM NAV -->
@@ -2680,19 +2703,19 @@ function initCharts() {
                       <div class="kpi-card"><div class="kpi-accent-bar grey"></div><div class="kpi-label">Year 3 Budget</div><div class="kpi-value grey">${fmt(totalY3)}</div><div class="kpi-sub">${((totalY3/totalGrant)*100).toFixed(1)}% of total grant</div></div>
                         `; }
 
-      // Underspend detection: flag districts where Y1 < 15% of total (slow start)
-      const underspendDistricts = districts.filter(d => {
-            const y1Pct = (d.yearlyBudget.y1 / d.funding) * 100;
-            const y2Pct = (d.yearlyBudget.y2 / d.funding) * 100;
-            // Flag: Y1 < 15% is a slow start; Y2 < 40% cumulative is concerning
-            return y1Pct < 15 || y2Pct < 30;
-          });
+// Manual underspend flagging — EEO leadership selects districts
+        let flaggedDistricts = new Set();
 
-      // Render underspend alerts
-      const countEl = document.getElementById('underspend-count');
-      if (countEl) {
-            countEl.textContent = underspendDistricts.length + ' District' + (underspendDistricts.length !== 1 ? 's' : '') + ' Flagged';
-            countEl.style.background = underspendDistricts.length === 0 ? '#1a7a3c' : '#c53030';
+        function renderUnderspendUI() {
+          const countEl = document.getElementById('underspend-count');
+          const listEl = document.getElementById('underspend-list');
+          const tbody = document.getElementById('spend-table-body');
+
+          // Update badge
+          if (countEl) {
+            const n = flaggedDistricts.size;
+            countEl.textContent = n + ' District' + (n !== 1 ? 's' : '') + ' Flagged';
+            countEl.style.background = n === 0 ? '#1a7a3c' : '#c53030';
             countEl.style.color = '#fff';
             countEl.style.padding = '3px 10px';
             countEl.style.borderRadius = '20px';
@@ -2700,50 +2723,77 @@ function initCharts() {
             countEl.style.fontWeight = '700';
           }
 
-      const listEl = document.getElementById('underspend-list');
-      if (listEl) {
-            if (underspendDistricts.length === 0) {
-                    listEl.innerHTML = '<div style="padding:16px;color:var(--success);font-weight:600;">&#10003; All districts are on track — no underspend risks detected.</div>';
-                  } else {
-                    listEl.innerHTML = underspendDistricts.map(d => {
-                              const y1Pct = ((d.yearlyBudget.y1/d.funding)*100).toFixed(1);
-                              const y2Pct = ((d.yearlyBudget.y2/d.funding)*100).toFixed(1);
-                              const risk = parseFloat(y1Pct) < 10 ? 'HIGH RISK' : 'MONITOR';
-                              const riskColor = risk === 'HIGH RISK' ? '#c53030' : '#D18A00';
-                              return `<div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--border);">
-                                        <div><strong>${d.shortName}</strong><br><span style="font-size:12px;color:var(--text-muted)">${d.program.slice(0,60)}...</span></div>
-                                                  <div style="text-align:right;min-width:200px;">
-                                                              <span style="background:${riskColor};color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">${risk}</span><br>
-                                                                          <span style="font-size:12px;color:var(--text-muted)">Y1: ${y1Pct}% | Y2: ${y2Pct}% | Total: ${fmt(d.funding)}</span>
-                                                                                    </div>
-                                                                                            </div>`;
-                            }).join('');
-                  }
+// Update chip button styles
+          districts.forEach(d => {
+            const chip = document.getElementById('chip-' + d.id);
+            if (chip) {
+              const flagged = flaggedDistricts.has(d.id);
+              chip.style.background = flagged ? '#c53030' : 'var(--bg-card)';
+              chip.style.color = flagged ? '#fff' : 'var(--text-secondary)';
+              chip.style.borderColor = flagged ? '#c53030' : 'var(--border-strong)';
+            }
+          });
+
+                    // Update alert list
+          if (listEl) {
+            const flaggedArr = districts.filter(d => flaggedDistricts.has(d.id));
+            if (flaggedArr.length === 0) {
+              listEl.innerHTML = '<div style="padding:16px;color:var(--success);font-weight:600;">&#10003; No districts flagged — use the selector above to flag districts with underspend concerns.</div>';
+            } else {
+              listEl.innerHTML = flaggedArr.map(d => {
+                const y1Pct = ((d.yearlyBudget.y1/d.funding)*100).toFixed(1);
+                const y2Pct = ((d.yearlyBudget.y2/d.funding)*100).toFixed(1);
+                return `<div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid rgba(229,62,62,0.2);">
+                  <div><strong>${d.shortName}</strong><br><span style="font-size:12px;color:var(--text-muted)">${d.program.slice(0,60)}...</span></div>
+                  <div style="text-align:right;display:flex;align-items:center;gap:10px;">
+                    <span style="font-size:12px;color:var(--text-muted)">Y1: ${y1Pct}% | Y2: ${y2Pct}% | Total: ${fmt(d.funding)}</span>
+                    <button onclick="toggleFlag('${d.id}')" style="background:#e53e3e;color:#fff;border:none;border-radius:8px;padding:4px 10px;font-size:11px;font-weight:700;cursor:pointer;">Remove</button>
+                  </div>
+                </div>`;
+              }).join('');
+            }
           }
 
-      // Render spend-down detail table
-      const tbody = document.getElementById('spend-table-body');
-      if (tbody) { tbody.innerHTML = districts.map(d => {
-            const y1P = ((d.yearlyBudget.y1/d.funding)*100).toFixed(1);
-            const cumulative = d.yearlyBudget.y1 + d.yearlyBudget.y2;
-            const cumPct = ((cumulative/d.funding)*100).toFixed(1);
-            const isRisk = parseFloat(y1P) < 15 || parseFloat(cumPct) < 60;
-            const statusColor = isRisk ? '#c53030' : '#1a7a3c';
-            const statusText = isRisk ? '&#9888; Risk' : '&#10003; On Track';
-            const pace = parseFloat(y1P) < 10 ? 'Slow' : parseFloat(y1P) < 20 ? 'Moderate' : 'On Track';
-            return `<tr>
-                  <td><strong>${d.shortName}</strong><br><span style="font-size:11px;color:var(--text-muted)">${d.tier === 1 ? 'Tier 1' : 'Tier 2 / LIFT'}</span></td>
-                        <td class="amount">${fmt(d.funding)}</td>
-                              <td class="amount">${fmt(d.yearlyBudget.y1)} <span style="font-size:11px;color:var(--text-muted)">(${y1P}%)</span></td>
-                                    <td class="amount">${fmt(d.yearlyBudget.y2)}</td>
-                                          <td class="amount">${fmt(d.yearlyBudget.y3)}</td>
-                                                <td><div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:${y1P}%;background:${isRisk?'#c53030':'var(--ccc-medium-blue)'}"></div></div><span style="font-size:11px">${y1P}%</span></td>
-                                                      <td><span style="font-size:12px;font-weight:600;color:${isRisk?'#D18A00':'var(--ccc-medium-blue)'}">${pace}</span></td>
-                                                            <td><span style="background:${statusColor};color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;white-space:nowrap">${statusText}</span></td>
-                                                                </tr>`;
-          }).join(''); }
-    }
-// INIT
+          // Update detail table
+          if (tbody) {
+            tbody.innerHTML = districts.map(d => {
+              const y1P = ((d.yearlyBudget.y1/d.funding)*100).toFixed(1);
+              const isFlagged = flaggedDistricts.has(d.id);
+              const statusColor = isFlagged ? '#c53030' : '#1a7a3c';
+              const statusText = isFlagged ? '&#9888; Flagged' : '&#10003; On Track';
+              const barColor = isFlagged ? '#e53e3e' : 'var(--ccc-medium-blue)';
+              return `<tr>
+                <td><strong>${d.shortName}</strong><br><span style="font-size:11px;color:var(--text-muted)">${d.tier === 1 ? 'Tier 1' : 'Tier 2 / LIFT'}</span></td>
+                <td class="amount">${fmt(d.funding)}</td>
+                <td class="amount">${fmt(d.yearlyBudget.y1)} <span style="font-size:11px;color:var(--text-muted)">(${y1P}%)</span></td>
+                <td class="amount">${fmt(d.yearlyBudget.y2)}</td>
+                <td class="amount">${fmt(d.yearlyBudget.y3)}</td>
+                <td><div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:${y1P}%;background:${barColor}"></div></div><span style="font-size:11px">${y1P}%</span></td>
+                <td><button onclick="toggleFlag('${d.id}')" style="background:${isFlagged?'#e53e3e':'var(--ccc-dark-blue)'};color:#fff;border:none;border-radius:8px;padding:4px 10px;font-size:11px;font-weight:600;cursor:pointer;">${isFlagged?'Unflag':'Flag'}</button></td>
+                <td><span style="background:${statusColor};color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;white-space:nowrap">${statusText}</span></td>
+              </tr>`;
+            }).join('');
+          }
+        }
+
+        window.toggleFlag = function(districtId) {
+          if (flaggedDistricts.has(districtId)) {
+            flaggedDistricts.delete(districtId);
+          } else {
+            flaggedDistricts.add(districtId);
+          }
+          renderUnderspendUI();
+        };
+
+        // Render district selector chips
+        const selectorEl = document.getElementById('underspend-selector');
+        if (selectorEl) {
+          selectorEl.innerHTML = districts.map(d => `
+            <button id="chip-${d.id}" onclick="toggleFlag('${d.id}')" style="padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;border:1.5px solid var(--border-strong);background:var(--bg-card);color:var(--text-secondary);cursor:pointer;transition:all 0.18s;margin:2px;">${d.shortName}</button>
+          `).join('');
+        }
+
+        renderUnderspendUI();
 // ══════════════════════════════════
 document.addEventListener('DOMContentLoaded', () => {
   renderOverviewTable();
