@@ -2674,7 +2674,8 @@ function initCharts() {
 
       // KPI Row
       const kpiRow = document.getElementById('spend-kpi-row');
-          <div class="kpi-card"><div class="kpi-accent-bar blue"></div><div class="kpi-label">Total Grant</div><div class="kpi-value blue">${fmt(totalGrant)}</div><div class="kpi-sub">All 11 districts</div></div>
+                if (kpiRow) kpiRow.innerHTML = `
+<div class="kpi-card"><div class="kpi-accent-bar blue"></div><div class="kpi-label">Total Grant</div><div class="kpi-value blue">${fmt(totalGrant)}</div><div class="kpi-sub">All 11 districts</div></div>
               <div class="kpi-card"><div class="kpi-accent-bar medium-blue"></div><div class="kpi-label">Year 1 Budget</div><div class="kpi-value medium-blue">${fmt(totalY1)}</div><div class="kpi-sub">${((totalY1/totalGrant)*100).toFixed(1)}% of total grant</div></div>
                   <div class="kpi-card"><div class="kpi-accent-bar gold"></div><div class="kpi-label">Year 2 Budget</div><div class="kpi-value gold">${fmt(totalY2)}</div><div class="kpi-sub">${((totalY2/totalGrant)*100).toFixed(1)}% of total grant</div></div>
                         `; }
@@ -2746,7 +2747,7 @@ function initCharts() {
                 <td><div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:${y1P}%;background:${barColor}"></div></div><span style="font-size:11px">${y1P}%</span></td>
                 <td><button onclick="toggleFlag('${d.id}')" style="background:${isFlagged?'#e53e3e':'var(--ccc-dark-blue)'};color:#fff;border:none;border-radius:8px;padding:4px 10px;font-size:11px;font-weight:600;cursor:pointer;">${isFlagged?'Unflag':'Flag'}</button></td>
                 <td><span style="background:${statusColor};color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;white-space:nowrap">${statusText}</span></td></td></tr>`
-        }              .join('');
+        }       )       .join('');
           }
         }
 
