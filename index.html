@@ -2657,6 +2657,7 @@ function initCharts() {
         { label: 'Year 2', data: districts.map(d => d.yearlyBudget.y2), backgroundColor: C.darkBlue, borderRadius: 4, borderSkipped: false },
         
             ]
+      },
     options: { ...baseOpts,
       plugins: { ...baseOpts.plugins, tooltip: { callbacks: { label: ctx => ' ' + ctx.dataset.label + ': $' + ctx.raw.toLocaleString() } } },
       scales: {
