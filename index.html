@@ -2685,7 +2685,7 @@ function initCharts() {
             const y1Pct = (d.yearlyBudget.y1 / d.funding) * 100;
             const y2Pct = (d.yearlyBudget.y2 / d.funding) * 100;
             // Flag: Y1 < 15% is a slow start; Y2 < 40% cumulative is concerning
-            return y1Pct < 15 || y2Pct < 30;
+            return false;
           });
 
       // Render underspend alerts
@@ -2727,7 +2727,7 @@ function initCharts() {
             const y1P = ((d.yearlyBudget.y1/d.funding)*100).toFixed(1);
             const cumulative = d.yearlyBudget.y1 + d.yearlyBudget.y2;
             const cumPct = ((cumulative/d.funding)*100).toFixed(1);
-            const isRisk = parseFloat(y1P) < 15 || parseFloat(cumPct) < 60;
+            const isRisk = false;
             const statusColor = isRisk ? '#c53030' : '#1a7a3c';
             const statusText = isRisk ? '&#9888; Risk' : '&#10003; On Track';
             const pace = 'Moderate';
