@@ -1249,7 +1249,7 @@
 .spend-period-tab { padding:5px 14px; border-radius:20px; font-size:12px; font-weight:600; border:1.5px solid var(--border-strong); background:var(--bg-card); color:var(--text-secondary); cursor:pointer; transition:all var(--transition); }
 .spend-period-tab:hover { border-color:var(--ccc-medium-blue); color:var(--ccc-medium-blue); }
 .spend-period-tab.active { background:var(--ccc-dark-blue); color:#fff; border-color:var(--ccc-dark-blue); }
-[data-theme="dark"] .spend-period-tab.active { background:var(--accent-light); color:var(--ccc-dark-blue); border-color:var(--accent-light); }
+[data-theme="dark"] .spend-period-tab.active { background:var(--accent-light); color:var(--ccc-dark-blue); border-color:var(--accent-light); } .district-flag-tabs { display:flex; gap:4px; } .district-flag-btn { padding:3px 10px; border-radius:20px; font-size:11px; font-weight:700; border:1.5px solid var(--border-strong); background:var(--bg-card); color:var(--text-secondary); cursor:pointer; transition:all var(--transition); white-space:nowrap; } .district-flag-btn:hover { border-color:var(--ccc-medium-blue); } .district-flag-btn.on-track.active { background:#1a7a3c; color:#fff; border-color:#1a7a3c; } .district-flag-btn.at-risk.active { background:#c53030; color:#fff; border-color:#c53030; }
     /* ══════════════════════════════════════════════════
        TRANSLATION BANNER
     ══════════════════════════════════════════════════ */
@@ -2739,7 +2739,7 @@ function initCharts() {
                                           <td class="amount">${fmt(d.yearlyBudget.y3)}</td>
                                                 <td><div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:${y1P}%;background:${isRisk?'#c53030':'var(--ccc-medium-blue)'}"></div></div><span style="font-size:11px">${y1P}%</span></td>
                                                       <td><span style="font-size:12px;font-weight:600;color:${isRisk?'#D18A00':'var(--ccc-medium-blue)'}">${pace}</span></td>
-                                                            <td><span style="background:${statusColor};color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;white-space:nowrap">${statusText}</span></td>
+                                                            <td><div class="district-flag-tabs"><button class="district-flag-btn on-track ${flagOnTrack?'active':''}" onclick="setDistrictFlag('${d.id}','on-track')">&#10003; On Track</button><button class="district-flag-btn at-risk ${flagAtRisk?'active':''}" onclick="setDistrictFlag('${d.id}','at-risk')">&#9888; At Risk</button></div></td>
                                                                 </tr>`;
           }).join(''); }
     }
