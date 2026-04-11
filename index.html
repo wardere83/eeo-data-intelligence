@@ -2730,7 +2730,7 @@ function initCharts() {
             const isRisk = parseFloat(y1P) < 15 || parseFloat(cumPct) < 60;
             const statusColor = isRisk ? '#c53030' : '#1a7a3c';
             const statusText = isRisk ? '&#9888; Risk' : '&#10003; On Track';
-            const pace = parseFloat(y1P) < 10 ? 'Slow' : parseFloat(y1P) < 20 ? 'Moderate' : 'On Track';
+            const pace = 'Moderate';
             return `<tr>
                   <td><strong>${d.shortName}</strong><br><span style="font-size:11px;color:var(--text-muted)">${d.tier === 1 ? 'Tier 1' : 'Tier 2 / LIFT'}</span></td>
                         <td class="amount">${fmt(d.funding)}</td>
@@ -2739,7 +2739,7 @@ function initCharts() {
                                           <td class="amount">${fmt(d.yearlyBudget.y3)}</td>
                                                 <td><div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:${y1P}%;background:${isRisk?'#c53030':'var(--ccc-medium-blue)'}"></div></div><span style="font-size:11px">${y1P}%</span></td>
                                                       <td><span style="font-size:12px;font-weight:600;color:${isRisk?'#D18A00':'var(--ccc-medium-blue)'}">${pace}</span></td>
-                                                            <td><span style="background:${statusColor};color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;white-space:nowrap">${statusText}</span></td>
+                                                            <td><button onclick="this.dataset.on=this.dataset.on==='1'?'0':'1';this.style.background=this.dataset.on==='1'?'#1a7a3c':'#c53030';this.textContent=this.dataset.on==='1'?'\u2713 On Track':'\u2717 Off Track';" data-on="${isRisk?'0':'1'}" style="background:${statusColor};color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;white-space:nowrap;cursor:pointer;border:none;">${statusText}</button></td>
                                                                 </tr>`;
           }).join(''); }
     }
