@@ -2297,7 +2297,7 @@ function showSection(id, clickedBtn, isMobile) {
 
   if (isMobile) closeSidebar();
 
-  // Sync sidebar when clicking mobile nav
+  // Re-init charts if switching to chart sections   if (id === 'overview' || id === 'funds') { setTimeout(() => initCharts(), 50); }   // Re-init charts if switching to chart sections   if (id === 'overview' || id === 'funds') { setTimeout(() => initCharts(), 50); }   // Sync sidebar when clicking mobile nav
   if (isMobile) {
     document.querySelectorAll('.sidebar .nav-item').forEach(n => {
       const onclick = n.getAttribute('onclick') || '';
@@ -2755,7 +2755,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderContacts();
       renderSpendDown();
   // Init charts on next frame
-  requestAnimationFrame(() => initCharts());
+  setTimeout(() => initCharts(), 150);
 });
 </script>
 </body>
