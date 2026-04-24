@@ -146,7 +146,9 @@
     /* ── SIDEBAR ── */
     .sidebar {
       position: fixed;
-      left: 0; top: 0; bottom: 0;
+      left: 0;
+      top: 0;
+      height: 100dvh;
       width: var(--sidebar-w);
       background: var(--ccc-dark-blue);
       color: #fff;
@@ -154,8 +156,10 @@
       flex-direction: column;
       z-index: 200;
       overflow-y: auto;
+      overflow-x: hidden;
       transition: transform var(--transition);
       scrollbar-width: none;
+      will-change: transform;
     }
     .sidebar::-webkit-scrollbar { display: none; }
 
@@ -243,6 +247,8 @@
       min-width: 0;
       display: flex;
       flex-direction: column;
+      height: 100dvh;
+      overflow: hidden;
     }
 
     /* ── TOP BAR ── */
@@ -256,9 +262,10 @@
       align-items: center;
       justify-content: space-between;
       padding: 0 28px;
-      z-index: 100;
+      z-index: 150;
       gap: 16px;
       box-shadow: var(--shadow-sm);
+      flex-shrink: 0;
     }
 
     .topbar-left {
@@ -387,6 +394,8 @@
       padding: 28px;
       max-width: var(--content-max);
       width: 100%;
+      overflow-y: auto;
+      overflow-x: hidden;
     }
 
     .section { display: none; }
@@ -1133,7 +1142,10 @@
       }
       .sidebar-overlay.open { display: block; }
       .hamburger-btn { display: flex; }
-      .main { margin-left: 0; }
+      .main { 
+        margin-left: 0;
+        height: auto;
+      }
       .topbar { padding: 0 16px; }
       .content { padding: 16px; }
     }
@@ -1143,7 +1155,10 @@
       .chart-grid-3 { grid-template-columns: 1fr; }
       .outcomes-grid { grid-template-columns: 1fr; }
       .mobile-nav { display: flex; }
-      .main { padding-bottom: var(--mobile-nav-h); }
+      .main { 
+        padding-bottom: var(--mobile-nav-h);
+        height: auto;
+      }
       .kpi-grid { grid-template-columns: repeat(2, 1fr); }
       .district-grid { grid-template-columns: 1fr; }
       .contacts-grid { grid-template-columns: 1fr; }
