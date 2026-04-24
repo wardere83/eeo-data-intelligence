@@ -174,11 +174,12 @@
       margin-bottom: 6px;
     }
     .logo-icon-wrap {
-      width: 36px; height: 36px;
+      width: 40px; height: 40px;
       background: var(--ccc-gold);
       border-radius: 8px;
       display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
     }
     .logo-icon-wrap svg { color: var(--ccc-dark-blue); }
     .logo-title {
@@ -1308,7 +1309,18 @@
     <div class="sidebar-logo">
       <div class="logo-mark">
         <div class="logo-icon-wrap">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 3h18v18H3z" stroke="none"/><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
+          <svg width="22" height="22" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- CCCCO Logo: Circles representing California CC network -->
+            <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="3" fill="none"/>
+            <circle cx="50" cy="50" r="35" stroke="currentColor" stroke-width="2.5" fill="none"/>
+            <!-- Central element representing unity -->
+            <circle cx="50" cy="50" r="8" fill="currentColor"/>
+            <!-- Four directional nodes representing regions -->
+            <circle cx="50" cy="18" r="5" fill="currentColor" opacity="0.8"/>
+            <circle cx="82" cy="50" r="5" fill="currentColor" opacity="0.8"/>
+            <circle cx="50" cy="82" r="5" fill="currentColor" opacity="0.8"/>
+            <circle cx="18" cy="50" r="5" fill="currentColor" opacity="0.8"/>
+          </svg>
         </div>
         <div>
           <div class="logo-title">EEO Data Intelligence</div>
