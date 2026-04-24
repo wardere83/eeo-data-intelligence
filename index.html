@@ -1702,8 +1702,8 @@
             <!-- SPEND-DOWN MONITOR SECTION -->
             <div id="section-spenddown" class="section">
                       <div class="page-header">
-                                  <h2>Spend-Down Monitor</h2>
-                                  <p>Track grant expenditures, year-by-year burn rates, and flag districts at risk of underspending</p>
+                                  <h2 data-i18n="spend_title">Spend-Down Monitor</h2>
+                                  <p data-i18n="spend_sub">Track grant expenditures, year-by-year burn rates, and flag districts at risk of underspending</p>
                                 </div>
 
                       <!-- KPI Summary Row -->
@@ -1713,9 +1713,9 @@
                       <div class="card mb-24" id="underspend-alert-card">
                                   <div class="card-header" style="background:rgba(229,62,62,0.08);border-bottom:2px solid rgba(229,62,62,0.25);">
                                                 <div class="card-title" style="color:#c53030;display:flex;align-items:center;gap:8px;">
-                                                                &#9888; Underspend Risk Alerts
+                                                                &#9888; <span data-i18n="alert_underspend">Underspend Risk Alerts</span>
                                                               </div>
-                                                <span id="underspend-count" class="risk-badge high">Calculating...</span>
+                                                <span id="underspend-count" class="risk-badge high" data-i18n="alert_calculating">Calculating...</span>
                                               </div>
                                   <div class="card-body">
                                                 <div id="underspend-list"></div>
@@ -1725,21 +1725,21 @@
                       <!-- Spend-Down Detail Table -->
                       <div class="card">
                                   <div class="card-header">
-                                                <div class="card-title">District Spend-Down Detail</div>
-                                                <div class="chart-label">Allocations vs. Year-by-Year Spend</div>
+                                                <div class="card-title" data-i18n="spend_detail_title">District Spend-Down Detail</div>
+                                                <div class="chart-label" data-i18n="spend_detail_sub">Allocations vs. Year-by-Year Spend</div>
                                               </div>
                                   <div class="data-table-wrap">
                                                 <table class="data-table" id="spend-table">
                                                                 <thead>
                                                                                   <tr>
-                                                                                                      <th>District</th>
-                                                                                                      <th>Total Grant</th>
-                                                                                                      <th>Year 1 Budget</th>
-                                                                                                      <th>Year 2 Budget</th>
-                                                                                                      <th>Year 3 Budget</th>
-                                                                                                      <th>Y1 % of Total</th>
-                                                                                                      <th>Spend Pace</th>
-                                                                                                      <th>Status</th>
+                                                                                                      <th data-i18n="th_district">District</th>
+                                                                                                      <th data-i18n="th_total_grant">Total Grant</th>
+                                                                                                      <th data-i18n="th_y1_budget">Year 1 Budget</th>
+                                                                                                      <th data-i18n="th_y2_budget">Year 2 Budget</th>
+                                                                                                      <th data-i18n="th_y3_budget">Year 3 Budget</th>
+                                                                                                      <th data-i18n="th_y1_pct">Y1 % of Total</th>
+                                                                                                      <th data-i18n="th_spend_pace">Spend Pace</th>
+                                                                                                      <th data-i18n="th_status">Status</th>
                                                                                                     </tr>
                                                                                 </thead>
                                                                 <tbody id="spend-table-body"></tbody>
@@ -2059,12 +2059,18 @@ const translations = {
     chart_yearly:'Year-by-Year Spend Profile', chart_all_districts:'All Districts',
     tl_y1:'Year 1 (25-26)', tl_y2:'Year 2 (26-27)', tl_y3:'Year 3 (27-28)',
     contacts_title:'District Contacts', contacts_sub:'Project leads, alternates, and fiscal reporters',
-        nav_spenddown:'Spend-Down Monitor',
+    nav_spenddown:'Spend-Down Monitor',
+    spend_title:'Spend-Down Monitor',
+    spend_sub:'Track grant expenditures, year-by-year burn rates, and flag districts at risk of underspending',
+    alert_underspend:'Underspend Risk Alerts', alert_calculating:'Calculating…',
+    spend_detail_title:'District Spend-Down Detail', spend_detail_sub:'Allocations vs. Year-by-Year Spend',
+    th_total_grant:'Total Grant', th_y1_budget:'Year 1 Budget', th_y2_budget:'Year 2 Budget', th_y3_budget:'Year 3 Budget',
+    th_y1_pct:'Y1 % of Total', th_spend_pace:'Spend Pace', th_status:'Status',
   },
   es: {
     nav_overview:'Resumen', nav_funds:'Asignaciones', nav_districts:'Distritos',
     nav_outcomes:'Resultados', nav_budget:'Presupuesto', nav_timeline:'Cronograma', nav_contacts:'Contactos',
-        nav_spenddown:'Spend-Down Monitor',
+    nav_spenddown:'Monitor de Ejecución',
     topbar_title:'Inteligencia de Datos EEO',
     overview_title:'Resumen del Programa',
     overview_sub:'Resumen estatal de la subvención EEO de Mejores Prácticas Innovadoras en 11 distritos de colegios comunitarios',
@@ -2096,6 +2102,12 @@ const translations = {
     chart_yearly:'Perfil de Gasto Año por Año', chart_all_districts:'Todos los Distritos',
     tl_y1:'Año 1 (25-26)', tl_y2:'Año 2 (26-27)', tl_y3:'Año 3 (27-28)',
     contacts_title:'Contactos de Distrito', contacts_sub:'Líderes de proyecto, alternos y reporteros fiscales',
+    spend_title:'Monitor de Ejecución de Fondos',
+    spend_sub:'Seguimiento de gastos, ritmo de ejecución anual e identificación de distritos con riesgo de subejecución',
+    alert_underspend:'Alertas de Riesgo de Subejecución', alert_calculating:'Calculando…',
+    spend_detail_title:'Detalle de Ejecución por Distrito', spend_detail_sub:'Asignaciones vs. Gasto Año por Año',
+    th_total_grant:'Total de la Subvención', th_y1_budget:'Presupuesto Año 1', th_y2_budget:'Presupuesto Año 2', th_y3_budget:'Presupuesto Año 3',
+    th_y1_pct:'Año 1 % del Total', th_spend_pace:'Ritmo de Gasto', th_status:'Estado',
   },
   vi: {
     nav_overview:'Tổng quan', nav_funds:'Phân bổ vốn', nav_districts:'Quận',
@@ -2131,6 +2143,13 @@ const translations = {
     chart_yearly:'Hồ sơ chi tiêu hàng năm', chart_all_districts:'Tất cả quận',
     tl_y1:'Năm 1 (25-26)', tl_y2:'Năm 2 (26-27)', tl_y3:'Năm 3 (27-28)',
     contacts_title:'Liên hệ quận', contacts_sub:'Trưởng dự án, người thay thế và báo cáo tài chính',
+    nav_spenddown:'Theo dõi giải ngân',
+    spend_title:'Theo dõi giải ngân',
+    spend_sub:'Theo dõi chi tiêu tài trợ, tốc độ giải ngân hằng năm và cảnh báo các quận có nguy cơ chi tiêu thiếu',
+    alert_underspend:'Cảnh báo nguy cơ chi tiêu thiếu', alert_calculating:'Đang tính toán…',
+    spend_detail_title:'Chi tiết giải ngân theo quận', spend_detail_sub:'Phân bổ so với chi tiêu hằng năm',
+    th_total_grant:'Tổng tài trợ', th_y1_budget:'Ngân sách Năm 1', th_y2_budget:'Ngân sách Năm 2', th_y3_budget:'Ngân sách Năm 3',
+    th_y1_pct:'Năm 1 % của Tổng', th_spend_pace:'Tốc độ chi tiêu', th_status:'Trạng thái',
   },
   ar: {
     nav_overview:'نظرة عامة', nav_funds:'التخصيصات', nav_districts:'المقاطعات',
@@ -2166,6 +2185,13 @@ const translations = {
     chart_yearly:'ملف الإنفاق السنوي', chart_all_districts:'جميع المقاطعات',
     tl_y1:'السنة 1 (25-26)', tl_y2:'السنة 2 (26-27)', tl_y3:'السنة 3 (27-28)',
     contacts_title:'جهات اتصال المقاطعة', contacts_sub:'قادة المشروع والبدلاء ومراسلو الميزانية',
+    nav_spenddown:'متابعة الإنفاق',
+    spend_title:'متابعة الإنفاق',
+    spend_sub:'متابعة نفقات المنحة ومعدلات الإنفاق السنوية ورصد المقاطعات المعرضة لخطر نقص الإنفاق',
+    alert_underspend:'تنبيهات مخاطر نقص الإنفاق', alert_calculating:'جارٍ الحساب…',
+    spend_detail_title:'تفاصيل الإنفاق حسب المقاطعة', spend_detail_sub:'التخصيصات مقابل الإنفاق السنوي',
+    th_total_grant:'إجمالي المنحة', th_y1_budget:'ميزانية السنة 1', th_y2_budget:'ميزانية السنة 2', th_y3_budget:'ميزانية السنة 3',
+    th_y1_pct:'السنة 1 % من الإجمالي', th_spend_pace:'وتيرة الإنفاق', th_status:'الحالة',
   },
   tl: {
     nav_overview:'Pangkalahatang-tanaw', nav_funds:'Pagbibigay-pondo', nav_districts:'Mga Distrito',
@@ -2201,6 +2227,13 @@ const translations = {
     chart_yearly:'Profile ng Paggastos Taon-taon', chart_all_districts:'Lahat ng Distrito',
     tl_y1:'Taon 1 (25-26)', tl_y2:'Taon 2 (26-27)', tl_y3:'Taon 3 (27-28)',
     contacts_title:'Mga Kontak ng Distrito', contacts_sub:'Mga lider ng proyekto, kapalit, at mga fiscal reporter',
+    nav_spenddown:'Pagsubaybay sa Paggastos',
+    spend_title:'Pagsubaybay sa Paggastos ng Pondo',
+    spend_sub:'Subaybayan ang paggasta ng grant, taunang antas ng paggastos, at tukuyin ang mga distritong nasa panganib ng kakulangan sa paggastos',
+    alert_underspend:'Mga Babala sa Panganib ng Kakulangan sa Paggastos', alert_calculating:'Kinakalkula…',
+    spend_detail_title:'Detalye ng Paggastos kada Distrito', spend_detail_sub:'Mga Paglalaan kumpara sa Taunang Paggastos',
+    th_total_grant:'Kabuuang Grant', th_y1_budget:'Badyet Taon 1', th_y2_budget:'Badyet Taon 2', th_y3_budget:'Badyet Taon 3',
+    th_y1_pct:'Taon 1 % ng Kabuuan', th_spend_pace:'Bilis ng Paggastos', th_status:'Katayuan',
   }
 };
 
