@@ -2678,7 +2678,7 @@ function toggleDistrictStatus(btn, id) {
   districtStatuses[id] = isNowOff ? 'off' : 'on';
   btn.dataset.on = isNowOff ? '0' : '1';
   btn.style.background = isNowOff ? '#c53030' : '#1a7a3c';
-  btn.textContent = isNowOff ? '✗ Off Track' : '✓ On Track';
+  btn.textContent = isNowOff ? 'Off Track' : 'On Track';
   updateUnderspendAlerts();
 }
 
@@ -2763,7 +2763,7 @@ function renderSpendDown() {
             const cumPct = ((cumulative/d.funding)*100).toFixed(1);
             const isRisk = false;
             const statusColor = isRisk ? '#c53030' : '#1a7a3c';
-            const statusText = isRisk ? '&#9888; Risk' : '&#10003; On Track';
+            const statusText = isRisk ? 'Risk' : 'On Track';
             const pace = 'Moderate';
             return `<tr>
                   <td><strong>${d.shortName}</strong><br><span style="font-size:11px;color:var(--text-muted)">${d.tier === 1 ? 'Tier 1' : 'Tier 2 / LIFT'}</span></td>
