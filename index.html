@@ -2671,11 +2671,12 @@ function initCharts() {
 // ══════════════════════════════════
 // SPEND-DOWN MONITOR
 // ══════════════════════════════════
-const districtStatuses = {};
+const districtStatuses = JSON.parse(localStorage.getItem('districtStatuses') || '{}');
 
 function toggleDistrictStatus(btn, id) {
   const isNowOff = btn.dataset.on === '1';
   districtStatuses[id] = isNowOff ? 'off' : 'on';
+  localStorage.setItem('districtStatuses', JSON.stringify(districtStatuses));
   btn.dataset.on = isNowOff ? '0' : '1';
   btn.style.background = isNowOff ? '#c53030' : '#1a7a3c';
   btn.textContent = isNowOff ? 'Off Track' : 'On Track';
@@ -2761,9 +2762,9 @@ function renderSpendDown() {
             const y1P = ((d.yearlyBudget.y1/d.funding)*100).toFixed(1);
             const cumulative = d.yearlyBudget.y1 + d.yearlyBudget.y2;
             const cumPct = ((cumulative/d.funding)*100).toFixed(1);
-            const isRisk = false;
-            const statusColor = isRisk ? '#c53030' : '#1a7a3c';
-            const statusText = isRisk ? 'Risk' : 'On Track';
+            const isOffTrack = districtStatuses[d.id] === 'off';
+            const statusColor = isOffTrack ? '#c53030' : '#1a7a3c';
+            const statusText = isOffTrack ? 'Off Track' : 'On Track';
             const pace = 'Moderate';
             return `<tr>
                   <td><strong>${d.shortName}</strong><br><span style="font-size:11px;color:var(--text-muted)">${d.tier === 1 ? 'Tier 1' : 'Tier 2 / LIFT'}</span></td>
@@ -2771,9 +2772,9 @@ function renderSpendDown() {
                               <td class="amount">${fmt(d.yearlyBudget.y1)} <span style="font-size:11px;color:var(--text-muted)">(${y1P}%)</span></td>
                                     <td class="amount">${fmt(d.yearlyBudget.y2)}</td>
                                           <td class="amount">${fmt(d.yearlyBudget.y3)}</td>
-                                                <td><div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:${y1P}%;background:${isRisk?'#c53030':'var(--ccc-medium-blue)'}"></div></div><span style="font-size:11px">${y1P}%</span></td>
-                                                      <td><span style="font-size:12px;font-weight:600;color:${isRisk?'#D18A00':'var(--ccc-medium-blue)'}">${pace}</span></td>
-                                                            <td><button onclick="toggleDistrictStatus(this,'${d.id}')" data-on="${isRisk?'0':'1'}" style="background:${statusColor};color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;white-space:nowrap;cursor:pointer;border:none;">${statusText}</button></td>
+                                                <td><div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:${y1P}%;background:${isOffTrack?'#c53030':'var(--ccc-medium-blue)'}"></div></div><span style="font-size:11px">${y1P}%</span></td>
+                                                      <td><span style="font-size:12px;font-weight:600;color:${isOffTrack?'#D18A00':'var(--ccc-medium-blue)'}">${pace}</span></td>
+                                                            <td><button onclick="toggleDistrictStatus(this,'${d.id}')" data-on="${isOffTrack?'0':'1'}" style="background:${statusColor};color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;white-space:nowrap;cursor:pointer;border:none;">${statusText}</button></td>
                                                                 </tr>`;
           }).join(''); }
 }
