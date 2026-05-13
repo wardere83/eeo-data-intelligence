@@ -275,10 +275,12 @@
       top: 0;
       background: var(--bg-surface);
       border-bottom: 1px solid var(--border);
-      height: var(--header-h);
+      min-height: var(--header-h);
+      height: auto;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      flex-wrap: wrap;
       padding: 0 28px;
       z-index: 150;
       gap: 16px;
@@ -289,8 +291,10 @@
     .topbar-left {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
       min-width: 0;
+      flex-wrap: wrap;
+      row-gap: 6px;
     }
     .topbar-title {
       font-family: var(--font-display);
