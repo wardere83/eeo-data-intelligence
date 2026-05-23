@@ -1087,36 +1087,76 @@
       z-index: 150;
     }
 
-    @media (max-width:900px) {
-      .sidebar { transform:translateX(-100%); }
-      .sidebar.open { transform:translateX(0); box-shadow:var(--shadow-lg); }
-      .sidebar-overlay.open { display:block; }
-      .hamburger-btn { display:none !important; }
-      .main { margin-left:0; height:auto; padding-bottom:0; }
-    }
-    @media (max-width: 1024px) {
+    /* ══════════════════════════════════════════════════
+       RESPONSIVE BREAKPOINTS
+       Embedded note: this dashboard renders inside a CRM
+       shell whose 260-px primary nav stays visible at all
+       times, so breakpoints trigger generously to keep the
+       experience clean on tablets and tight desktop frames.
+       Desktop  ≥1280px : full sidebar + full grids
+       Laptop   1024–1279: full sidebar + condensed grids
+       Tablet   768–1023 : drawer sidebar + top mobile-nav
+       Phone    481–767  : drawer sidebar + top mobile-nav, tightened
+       Small    ≤480     : single-column KPIs, trimmed chrome
+    ══════════════════════════════════════════════════ */
+
+    /* Laptop — condense 3-up chart grids before sidebar hides */
+    @media (max-width: 1279px) {
       .chart-grid-3 { grid-template-columns: 1fr 1fr; }
+      .kpi-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     }
-    @media (max-width: 880px) {
-      .kpi-grid { grid-template-columns: repeat(3,minmax(0,1fr)); }
-    }
-    @media (max-width: 768px) {
+
+    /* Tablet + Phone — sidebar becomes drawer, mobile-nav appears */
+    @media (max-width: 1023px) {
+      .sidebar { transform: translateX(-100%); }
+      .sidebar.open { transform: translateX(0); box-shadow: var(--shadow-lg); }
+      .sidebar-overlay.open { display: block; }
+      .hamburger-btn { display: inline-flex; }
+      .main { margin-left: 0; height: auto; min-height: 100dvh; padding-bottom: 24px; }
+      .mobile-nav { display: flex; }
+      .content { padding-top: calc(var(--mobile-nav-h) + 8px); padding-left: 20px; padding-right: 20px; }
+      .topbar { padding: 0 18px; }
       .chart-grid { grid-template-columns: 1fr; }
       .chart-grid-3 { grid-template-columns: 1fr; }
       .outcomes-grid { grid-template-columns: 1fr; }
-      .mobile-nav { display: flex; }
-      .kpi-grid { grid-template-columns: repeat(2, 1fr); }
-      .district-grid,.contacts-grid,.budget-grid { grid-template-columns: 1fr; }
-      .grant-meta { gap: 14px; }
+      .kpi-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .district-grid, .contacts-grid, .budget-grid { grid-template-columns: 1fr; }
+      .grant-meta { gap: 14px; flex-wrap: wrap; }
       .grant-meta-divider { display: none; }
       .topbar-title { font-size: 16px; }
       .timeline-label { width: 120px; }
       .timeline-total { width: 64px; font-size: 12px; }
+      .data-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+      .data-table { min-width: 560px; }
     }
+
+    /* Phone */
+    @media (max-width: 767px) {
+      .content { padding-left: 16px; padding-right: 16px; padding-top: calc(var(--mobile-nav-h) + 6px); }
+      .topbar { padding: 0 14px; gap: 10px; }
+      .page-header h2 { font-size: 22px; }
+      .grant-meta { padding: 14px 16px; }
+      .grant-meta-item label { font-size: 9px; }
+      .grant-meta-item span { font-size: 13px; }
+    }
+
+    /* Small phone — single-column KPIs and trim accessory chrome */
     @media (max-width: 480px) {
-      .kpi-grid { grid-template-columns: 1fr 1fr; }
+      .kpi-grid { grid-template-columns: 1fr; }
       .kpi-value { font-size: 22px; }
       .topbar-badge { display: none; }
+      .content { padding-left: 12px; padding-right: 12px; }
+      .powered-by-logo { max-width: 130px; }
+      .sidebar { width: min(86vw, 280px); }
+    }
+
+    /* Ultra-narrow phone */
+    @media (max-width: 380px) {
+      .topbar { padding: 0 10px; }
+      .topbar-title { font-size: 14px; }
+      .page-header h2 { font-size: 20px; }
+      .mobile-nav-btn { font-size: 9px; }
+      .mobile-nav-btn svg { width: 16px; height: 16px; }
     }
 
     /* ══════════════════════════════════════════════════
@@ -1364,11 +1404,9 @@
     html[data-a11y-spacing="on"] body { line-height:1.85; letter-spacing:0.02em; word-spacing:0.06em; }
     html[data-a11y-guide="on"] .a11y-reading-guide { display:block; }
     .a11y-reading-guide { position:fixed; left:0; right:0; height:34px; background:rgba(255,221,0,0.20); border-top:1px solid rgba(255,180,0,0.5); border-bottom:1px solid rgba(255,180,0,0.5); pointer-events:none; z-index:998; display:none; }
-      /* Mobile nav clearance */
-    @media (max-width:768px) {
-      .mobile-nav { display:flex; }
-      .content { padding-top:56px; }
-      .main { padding-bottom:0; height:100dvh; }
+    /* Mobile nav layout safety — kept for legacy iOS Safari < 13 dvh fallback */
+    @media (max-width: 768px) {
+      .main { min-height: -webkit-fill-available; }
     }
   </style>
 </head>
