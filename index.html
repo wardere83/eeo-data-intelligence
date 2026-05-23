@@ -1101,24 +1101,7 @@
       display: flex;
       height: 100%;
     }
-    .mobile-nav-btn {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 3px;
-      color: rgba(255,255,255,0.5);
-      font-size: 9.5px;
-      font-weight: 600;
-      letter-spacing: 0.03em;
-      cursor: pointer;
-      border-radius: 8px;
-      transition: all var(--transition);
-      padding: 6px 2px;
-      border: none;
-      background: none;
-    }
+    .mobile-nav-btn { flex:0 0 auto; display:inline-flex; flex-direction:row; align-items:center; justify-content:center; gap:6px; color:rgba(255,255,255,0.65); font-size:12px; font-weight:600; letter-spacing:0.02em; cursor:pointer; border-radius:6px; transition:color var(--transition); padding:6px 14px; border:none; background:none; white-space:nowrap; position:relative; }
     .mobile-nav-btn.active {
       color: var(--ccc-gold);
     }
