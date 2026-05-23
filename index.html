@@ -154,7 +154,7 @@
       top: 0;
       height: 100dvh;
       width: var(--sidebar-w);
-      background: var(--ccc-dark-blue);
+      background: var(--ccc-medium-blue);
       color: #fff;
       display: flex;
       flex-direction: column;
@@ -213,9 +213,8 @@
     @media (max-width:520px) { .cccco-topbar-stamp { display:none; } }
 
     .sidebar-section-label { font-size:9.5px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:rgba(255,255,255,0.55); padding:14px 18px 4px; }
-    .sidebar-footer { margin-top:auto; padding:14px 18px 18px; border-top:1px solid rgba(255,255,255,0.10); }
-    .sidebar-footer-label { font-size:9.5px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:rgba(255,255,255,0.85); margin-bottom:4px; }
-    .sidebar-footer-val { font-size:12px; color:rgba(255,255,255,0.85); font-weight:500; line-height:1.35; }
+    .sidebar-footer { margin-top:auto; padding:18px 18px 22px; border-top:1px solid rgba(255,255,255,0.10); }
+    .powered-by-logo { display:block; width:100%; max-width:150px; height:auto; margin:0 auto; opacity:0.95; }
 
     .nav-item { display:flex; align-items:center; gap:10px; padding:7px 18px; font-size:13px; font-weight:500; color:rgba(255,255,255,0.85); cursor:pointer; border-left:3px solid transparent; transition:all var(--transition); border:none; background:none; width:100%; text-align:left; }
     .nav-item:hover {
@@ -1434,8 +1433,7 @@
                             Spend-Down Monitor
                           </button>
     <div class="sidebar-footer">
-      <div class="sidebar-footer-label">Administered by</div>
-      <div class="sidebar-footer-val">California Community Colleges Chancellor&rsquo;s Office</div>
+      <img src="ccc-powered-by-white.svg" alt="Powered by California Community Colleges" class="powered-by-logo" />
     </div>
   </aside>
 
