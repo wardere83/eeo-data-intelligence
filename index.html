@@ -1628,28 +1628,22 @@
 
         <div class="alloc-kpi-row">
           <div class="kpi-card">
-            <div class="kpi-accent-bar blue"></div>
+            <div class="kpi-accent-bar gold"></div>
             <div class="kpi-label" data-i18n="kpi_total_allocated">Total Allocated</div>
             <div class="kpi-value blue">$1,399,997</div>
-            <div class="kpi-sub" data-i18n="kpi_all_11">All 11 districts</div>
+            <div class="kpi-sub" data-i18n="kpi_all_11">All 11 Districts</div>
           </div>
           <div class="kpi-card">
-            <div class="kpi-accent-bar blue"></div>
+            <div class="kpi-accent-bar gold"></div>
             <div class="kpi-label" data-i18n="kpi_tier1_total">Tier 1 Total</div>
             <div class="kpi-value blue">$999,997</div>
-            <div class="kpi-sub" data-i18n="kpi_7dist">7 districts</div>
+            <div class="kpi-sub" data-i18n="kpi_7dist">7 Districts</div>
           </div>
           <div class="kpi-card">
-            <div class="kpi-accent-bar medium-blue"></div>
+            <div class="kpi-accent-bar gold"></div>
             <div class="kpi-label" data-i18n="kpi_tier2_total">Tier 2 Total</div>
             <div class="kpi-value medium-blue">$400,000</div>
-            <div class="kpi-sub" data-i18n="kpi_4dist">4 districts × $100K</div>
-          </div>
-          <div class="kpi-card">
-            <div class="kpi-accent-bar grey"></div>
-            <div class="kpi-label" data-i18n="kpi_ccco_disbursed_total">Total CCCCO Disbursed</div>
-            <div class="kpi-value grey">~$53K</div>
-            <div class="kpi-sub" data-i18n="kpi_ccco_disbursed_sub">Avg 4.8% of direct costs</div>
+            <div class="kpi-sub" data-i18n="kpi_4dist">4 Districts</div>
           </div>
         </div>
 
@@ -2151,9 +2145,9 @@ const translations = {
     table_district_summary:'District Summary',
     th_district:'District', th_tier:'Tier', th_funding:'Funding', th_ccco_disbursed:'CCCCO Disbursed', th_focus:'Primary Focus', th_total:'Total',
     funds_title:'Fund Allocations', funds_sub:'Detailed breakdown of grant funding across all 11 districts',
-    kpi_total_allocated:'Total Allocated', kpi_all_11:'All 11 districts',
-    kpi_tier1_total:'Tier 1 Total', kpi_7dist:'7 districts',
-    kpi_tier2_total:'Tier 2 Total', kpi_4dist:'4 districts × $100K',
+    kpi_total_allocated:'Total Allocated', kpi_all_11:'All 11 Districts',
+    kpi_tier1_total:'Tier 1 Total', kpi_7dist:'7 Districts',
+    kpi_tier2_total:'Tier 2 Total', kpi_4dist:'4 Districts',
     kpi_ccco_disbursed_total:'Total CCCCO Disbursed', kpi_ccco_disbursed_sub:'Avg 4.8% of direct costs',
     chart_funding_district:'Funding by District', chart_direct:'Direct Allocation',
     chart_tier_split:'Tier Split', chart_ccco_disbursed:'CCCCO Disbursed Cost Rates', chart_pct:'By District %',
@@ -2592,7 +2586,6 @@ function renderAllocationTable() {
         <th>District</th>
         <th>Tier</th>
         <th>Direct Funding</th>
-        <th>% of Total</th>
         <th>CCCCO Disbursed</th>
         <th>CCCCO Disbursed Rate</th>
         <th>LIFT</th>
@@ -2604,12 +2597,6 @@ function renderAllocationTable() {
           <td><strong>${d.shortName}</strong></td>
           <td><span class="tier-badge tier${d.tier}">Tier ${d.tier}</span></td>
           <td class="amount">${fmt(d.funding)}</td>
-          <td>
-            <div style="display:flex;align-items:center;gap:8px;">
-              <span style="font-size:13px;font-weight:600;">${((d.funding/total)*100).toFixed(1)}%</span>
-              <div class="progress-bar-wrap" style="flex:1;min-width:60px;"><div class="progress-bar-fill" style="width:${((d.funding/total)*100).toFixed(1)}%"></div></div>
-            </div>
-          </td>
           <td class="amount">${d.cccoDisbursedFunds > 0 ? fmt(d.cccoDisbursedFunds) : '—'}</td>
           <td style="color:var(--text-secondary)">${d.cccoDisbursedPct}</td>
           <td>${d.lift ? '<span class="tier-badge lift">LIFT</span>' : '—'}</td>
