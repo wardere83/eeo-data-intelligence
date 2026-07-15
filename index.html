@@ -1886,7 +1886,7 @@
                       <tr><th>District</th><th>BMR Status</th><th>Submitted</th><th class="num">Modified Y1 / Y2</th><th>Approved</th></tr>
                     </thead>
                     <tbody>
-                      <tr><td><strong>Allan Hancock Joint CCD</strong></td><td><span style="background:#1a7a3c;color:#fff;padding:2px 10px;border-radius:12px;font-size:11px;font-weight:700;">APPROVED</span></td><td>6/29/2026 · Dr. LeeAnne McNulty</td><td class="num amount">$56,628 / $43,372</td><td>CCCCO Staff</td></tr>
+                      <tr><td><strong>Allan Hancock Joint CCD</strong></td><td><span style="background:#1a7a3c;color:#fff;padding:2px 10px;border-radius:12px;font-size:11px;font-weight:700;">APPROVED</span></td><td>6/29/2026 · Dr. LeeAnne McNulty</td><td class="num amount">$56,628 / $43,372<br><span style="font-size:11px;color:var(--text-muted);font-weight:500;">Fund Balance: $44,893 / $37,373</span></td><td>CCCCO Staff</td></tr>
                       <tr><td>Antelope Valley CCD</td><td><span style="background:var(--bg-surface-2);color:var(--text-muted);padding:2px 10px;border-radius:12px;font-size:11px;font-weight:700;border:1px solid var(--border);">NO BMR SUBMITTED</span></td><td>—</td><td class="num">—</td><td>—</td></tr>
                       <tr><td>Citrus CCD</td><td><span style="background:var(--bg-surface-2);color:var(--text-muted);padding:2px 10px;border-radius:12px;font-size:11px;font-weight:700;border:1px solid var(--border);">NO BMR SUBMITTED</span></td><td>—</td><td class="num">—</td><td>—</td></tr>
                       <tr><td>Kern CCD</td><td><span style="background:var(--bg-surface-2);color:var(--text-muted);padding:2px 10px;border-radius:12px;font-size:11px;font-weight:700;border:1px solid var(--border);">NO BMR SUBMITTED</span></td><td>—</td><td class="num">—</td><td>—</td></tr>
@@ -1917,6 +1917,7 @@
                     <div class="kpi-card"><div class="kpi-accent-bar medium-blue"></div><div class="kpi-label">Modified Project Budget</div><div class="kpi-value medium-blue">$100,000</div><div class="kpi-sub">Both years, after modifications</div></div>
                     <div class="kpi-card"><div class="kpi-accent-bar gold"></div><div class="kpi-label">Variance vs Award</div><div class="kpi-value gold">+$0</div><div class="kpi-sub">Balanced to award</div></div>
                     <div class="kpi-card"><div class="kpi-accent-bar grey"></div><div class="kpi-label">Modified Y1 / Y2</div><div class="kpi-value grey" style="font-size:20px;">$56,628 / $43,372</div><div class="kpi-sub">Baseline $62,627 / $37,373</div></div>
+                    <div class="kpi-card"><div class="kpi-accent-bar medium-blue"></div><div class="kpi-label">Fund Balance Y1 / Y2</div><div class="kpi-value medium-blue" style="font-size:20px;">$44,893 / $37,373</div><div class="kpi-sub">Entered by district on the BMR</div></div>
                   </div>
 
                   <div class="card mb-24">
@@ -2037,6 +2038,8 @@ const districts = [
     id: 'ahc', name: 'Allan Hancock Joint CCD', shortName: 'Allan Hancock',
     program: 'AHC Professional Development and EEO Representative Programs',
     tier: 1, funding: 100000, cccoDisbursedFunds: 4762, cccoDisbursedPct: '4.76%',
+    // Fund balance entered by the district on the approved 6/29/2026 BMR
+    fundBalance: { y1: 44893, y2: 37373 },
     address: '800 S. College Drive, Santa Maria, CA 93454', lift: false,
     focus: ['Mentorship', 'Training', 'Hiring Equity'],
     outcomes: [
@@ -2812,6 +2815,11 @@ function renderBudget() {
           </div>
           <div class="budget-line-bar"><div class="budget-line-bar-fill" style="width:${((amount/total)*100).toFixed(1)}%"></div></div>
         `).join('')}
+        ${d.fundBalance ? `
+          <div class="budget-line" style="border-top:1px dashed var(--border);margin-top:6px;padding-top:10px;">
+            <span class="budget-line-label"><strong>Fund Balance</strong> · Y1 / Y2 (per BMR)</span>
+            <span class="budget-line-amount">${fmt(d.fundBalance.y1)} / ${fmt(d.fundBalance.y2)}</span>
+          </div>` : ''}
       </div>`;
   }).join('');
 }
@@ -3122,8 +3130,8 @@ function renderSpendDown() {
             return `<tr>
                   <td><strong>${d.shortName}</strong><br><span style="font-size:11px;color:var(--text-muted)">${d.tier === 1 ? 'Tier 1' : 'Tier 2 / LIFT'}</span></td>
                         <td class="amount">${fmt(d.funding)}</td>
-                              <td class="amount">${fmt(d.yearlyBudget.y1)} <span style="font-size:11px;color:var(--text-muted)">(${y1P}%)</span></td>
-                                    <td class="amount">${fmt(d.yearlyBudget.y2)}</td>
+                              <td class="amount">${fmt(d.yearlyBudget.y1)} <span style="font-size:11px;color:var(--text-muted)">(${y1P}%)</span>${d.fundBalance ? `<br><span style="font-size:11px;color:var(--text-muted);font-weight:500;">Fund Balance: ${fmt(d.fundBalance.y1)}</span>` : ''}</td>
+                                    <td class="amount">${fmt(d.yearlyBudget.y2)}${d.fundBalance ? `<br><span style="font-size:11px;color:var(--text-muted);font-weight:500;">Fund Balance: ${fmt(d.fundBalance.y2)}</span>` : ''}</td>
                                           <td class="amount">${fmt(d.yearlyBudget.y3)}</td>
                                                 <td><div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:${y1P}%;background:${isOffTrack?'#c53030':'var(--ccc-medium-blue)'}"></div></div><span style="font-size:11px">${y1P}%</span></td>
                                                       <td><span style="font-size:12px;font-weight:600;color:${isOffTrack?'#D18A00':'var(--ccc-medium-blue)'}">${pace}</span></td>
