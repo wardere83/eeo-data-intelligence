@@ -13,6 +13,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script>window.Chart || document.write('<script src="vendor/chart.umd.js"><\/script>');</script>
   <style>
     /* ══════════════════════════════════════════════════
        CCCCO BRAND TOKENS
@@ -2076,6 +2077,7 @@ const districts = [
     contact: { name: 'Rebecca Farley', role: 'Project Lead', email: 'rebecca.farley@avc.edu' },
     altContact: { name: 'Paloma Astorga', role: 'Project Lead', email: 'paloma.astorga@avc.edu' },
     fiscalReporter: { name: 'Christos Valiotis', role: 'Fiscal Reporter', email: 'cvaliotis@avc.edu' },
+    planApprover: { name: 'Dr. Jennifer Zellet', role: 'Plan Approver', email: 'jennifer.zellet@avc.edu' },
     budgetHighlights: { 'Instructional Salaries (1000)': 9000, 'Non-Instructional Salaries (2000)': 34085, 'Other Operating & Services (5000)': 56915 },
     yearlyBudget: { y1: 16830, y2: 23255, y3: 59915 }, primaryFocus: 'LIFT Mentorship Platform', phases: [{label:'LIFT platform onboarding',startQ:1,span:2,shade:'a'},{label:'Mentor/mentee pilot',startQ:2,span:4,shade:'b'},{label:'Regional meet-ups + expansion',startQ:5,span:4,shade:'c'},{label:'Impact study & scaling',startQ:8,span:3,shade:'d'}]
   },
@@ -2094,8 +2096,9 @@ const districts = [
       'Standardized training curriculum development and delivery'
     ],
     contact: { name: 'My Chau', role: 'Project Lead', email: 'mchau@citruscollege.edu' },
-    altContact: { name: 'Greg Schulz Ed.D.', role: 'Plan Approver', email: 'gschulz@citruscollege.edu' },
+    altContact: { name: 'Trevor Tolliver', role: 'Campus Lead', email: '' },
     fiscalReporter: { name: 'Claudette Dain', role: 'Fiscal Reporter', email: 'cdain@citruscollege.edu' },
+    planApprover: { name: 'Greg Schulz, Ed.D.', role: 'Plan Approver', email: 'gschulz@citruscollege.edu' },
     budgetHighlights: { 'Non-Instructional Salaries (2000)': 18000, 'Employee Benefits (3000)': 1060, 'Other Operating & Services (5000)': 74940, 'CCCCO Disbursed (7000)': 5000 },
     yearlyBudget: { y1: 15000, y2: 40500, y3: 44500 }, primaryFocus: 'LIFT Mentorship Platform', phases: [{label:'Platform setup + curriculum',startQ:1,span:2,shade:'a'},{label:'Cohort 1 (admin + classified)',startQ:3,span:4,shade:'b'},{label:'Cohort 2 + meet-ups',startQ:6,span:3,shade:'c'},{label:'Evaluation & sustainability',startQ:9,span:2,shade:'d'}]
   },
@@ -2145,7 +2148,7 @@ const districts = [
       'Sustainable facilitator recognition model'
     ],
     contact: { name: 'Adrienne Price', role: 'Project Lead', email: 'aprice@mtsac.edu' },
-    altContact: null,
+    altContact: { name: 'Dr. Sokha Song', role: 'Executive Sponsor · VP of Human Resources', email: 'ssong@mtsac.edu' },
     fiscalReporter: { name: 'Delana Miller', role: 'Fiscal Reporter', email: 'dmiller102@mtsac.edu' },
     budgetHighlights: { 'Instructional Salaries (1000)': 12000, 'Non-Instructional Salaries (2000)': 67925, 'Employee Benefits (3000)': 6576, 'Supplies & Materials (4000)': 14857, 'Other Operating & Services (5000)': 41500, 'CCCCO Disbursed (7000)': 7142 },
     yearlyBudget: { y1: 38000, y2: 64000, y3: 48000 }, primaryFocus: 'Mentorship & Restorative Justice', phases: [{label:'NESP expansion (Qooper)',startQ:1,span:3,shade:'a'},{label:'RJ facilitator training',startQ:2,span:3,shade:'b'},{label:'Yr 2 mentor + RJ cohort',startQ:5,span:4,shade:'c'},{label:'Evaluation & recognition',startQ:9,span:2,shade:'d'}]
@@ -2187,7 +2190,7 @@ const districts = [
     ],
     contact: { name: 'Jamille Teer', title: 'Facilities Project Coordinator', role: 'Project Lead', email: 'jteer@peralta.edu', phone: '(510) 466-7342' },
     altContact: { name: 'Emily Kaplan', title: 'Dir. of Grants Management', role: 'Project Lead', email: 'ekaplan@peralta.edu', phone: '(510) 599-4858' },
-    fiscalReporter: { name: 'Andrea Epps', title: 'Interim Vice Chancellor, HR', role: 'Project Lead', email: 'aepps@peralta.edu', phone: '(510) 466-7386' },
+    fiscalReporter: null,
     planApprover: { name: 'Dr. Tammeil Gilkerson', title: 'Chancellor', role: 'Senior Admin', email: 'TGilkerson@peralta.edu', phone: '(510) 466-7200', photo: 'photos/peralta/gilkerson.jpg' },
     budgetHighlights: { 'Non-Instructional Salaries (2000)': 57420, 'Employee Benefits (3000)': 8280, 'LIFT Services (5000)': 29300, 'CCCCO Disbursed (7000)': 5000 },
     yearlyBudget: { y1: 25580, y2: 37210, y3: 37210 }, primaryFocus: 'LIFT Mentorship Platform', phases: [{label:'LIFT platform deployment',startQ:1,span:2,shade:'a'},{label:'Yr 1 mentor pairing',startQ:2,span:4,shade:'b'},{label:'Yr 2 expansion + meet-ups',startQ:6,span:3,shade:'c'},{label:'Impact evaluation',startQ:9,span:2,shade:'d'}]
@@ -2208,9 +2211,9 @@ const districts = [
       'Governing Board resolution to institutionalize Tier 1 recommendations',
       'Permanent sub-committees on Data & Metrics, Policy & Procedure, Training'
     ],
-    contact: { name: 'Jared Burns Dr.', role: 'Project Lead', email: 'jburns001@sdccd.edu' },
-    altContact: { name: 'John Valencia', role: 'Alternate Project Lead', email: 'john@goodforothers.org' },
-    fiscalReporter: { name: 'Dan Troy', role: 'Fiscal Reporter', email: 'dtroy@sdccd.edu' },
+    contact: { name: 'Dr. Jared Burns', role: 'Plan Approver & Project Lead', email: 'jburns001@sdccd.edu' },
+    altContact: { name: 'Dr. Michelle Fischthal', role: 'Co-Chair & Co-Executive Sponsor', email: '' },
+    fiscalReporter: { name: 'Daniel J. Troy, M.P.P.', role: 'Fiscal Reporter', email: 'dtroy@sdccd.edu' },
     budgetHighlights: { 'Instructional Salaries (1000)': 24370, 'Non-Instructional Salaries (2000)': 38000, 'Supplies & Materials (4000)': 2605, 'Consultants & Focus Groups (5000)': 77880, 'CCCCO Disbursed (7000)': 7142 },
     yearlyBudget: { y1: 30000, y2: 60000, y3: 59997 }, primaryFocus: 'Hiring Audit & Data Analytics', phases: [{label:'TRACE workgroup convened',startQ:1,span:2,shade:'a'},{label:'Data analysis + focus groups',startQ:3,span:4,shade:'b'},{label:'White Paper + pilot protocols',startQ:6,span:3,shade:'c'},{label:'Board resolution + handoff',startQ:9,span:2,shade:'d'}]
   },
@@ -2229,8 +2232,9 @@ const districts = [
       'Inclusive, equitable organizational culture metrics tracked'
     ],
     contact: { name: 'Tracy Beidleman', role: 'Project Lead', email: 'beidleman_tracy@smc.edu' },
-    altContact: { name: 'Diana Pennington', role: 'Project Lead', email: 'pennington_diana@smc.edu' },
+    altContact: { name: 'Nane Zadouri', role: 'Alternate Project Lead', email: 'zadouri_nane@smc.edu' },
     fiscalReporter: { name: 'Ann Le', role: 'Fiscal Reporter', email: 'le_ann@smc.edu' },
+    planApprover: { name: "Dr. Tre'Shawn Hall-Baker", role: 'Plan Approver', email: 'hallbaker_treshawn@smc.edu' },
     budgetHighlights: { 'Faculty Stipends / Overtime': 40000, 'Professional Development Travel (5000)': 45000, 'ERG & Consultant Support (5000)': 57857, 'CCCCO Disbursed (7000)': 7143 },
     yearlyBudget: { y1: 0, y2: 75000, y3: 75000 }, primaryFocus: 'Workforce Belonging & ERGs', phases: [{label:'PD workshops + ERG launch',startQ:1,span:4,shade:'a'},{label:'Conferences + mentor cycle',startQ:3,span:4,shade:'b'},{label:'Yr 2 ERGs + workshops',startQ:5,span:5,shade:'c'},{label:'Annual reporting',startQ:9,span:2,shade:'d'}]
   },
@@ -2250,7 +2254,8 @@ const districts = [
       'Outreach to minority-serving institutions for recruitment',
       'Long-term sustainability plan beyond grant period'
     ],
-    contact: { name: 'Nickolas Trujillo', role: 'Project Lead', email: 'nickolas.trujillo@scccd.edu' },
+    contact: { name: 'Nickolas Trujillo', role: 'Project Lead & Plan Approver', email: 'nickolas.trujillo@scccd.edu' },
+    coLead: { name: 'Julianna Mosier', role: 'Project Lead', email: 'julianna.mosier@scccd.edu' },
     altContact: { name: 'Susan Soudchantho', role: 'Alternate Project Lead', email: 'susan.soudchantho@scccd.edu' },
     fiscalReporter: { name: 'David El Fattal', role: 'Fiscal Reporter', email: 'accounting@scccd.edu' },
     budgetHighlights: { 'Faculty Coordinator 15% FTE (1000)': 25000, 'Intern & Mentor Stipends (1000)': 70000, 'Outreach & Recruitment (5000)': 20000, 'Program Marketing & Evaluation (5000)': 27857, 'CCCCO Disbursed (7000)': 7143 },
@@ -2273,6 +2278,7 @@ const districts = [
     contact: { name: 'Ken Songco', role: 'Project Lead', email: 'kenneth.songco@missioncollege.edu' },
     altContact: { name: 'Amanda Marshall', role: 'Alternate Project Lead', email: 'amanda.marshall@missioncollege.edu' },
     fiscalReporter: { name: 'Danny Nguyen', role: 'Fiscal Reporter', email: 'danny.nguyen@missioncollege.edu' },
+    planApprover: { name: 'Dr. Seher Awan', role: 'Plan Approver', email: 'Seher.Awan@missioncollege.edu' },
     budgetHighlights: { 'Non-Instructional Salaries (2000)': 57420, 'Employee Benefits (3000)': 8280, 'LIFT Services (5000)': 34300 },
     yearlyBudget: { y1: 23000, y2: 38500, y3: 38500 }, primaryFocus: 'LIFT Mentorship Platform', phases: [{label:'LIFT platform deployment',startQ:1,span:2,shade:'a'},{label:'Mentor pairing + curriculum',startQ:2,span:4,shade:'b'},{label:'Yr 2 expansion + meet-ups',startQ:6,span:3,shade:'c'},{label:'Annual impact study',startQ:9,span:2,shade:'d'}]
   }
@@ -2863,7 +2869,7 @@ function renderContacts() {
   const grid = document.getElementById('contacts-grid');
   if (!grid) return;
   grid.innerHTML = districts.map(d => {
-    const people = [d.contact, d.altContact, d.fiscalReporter].filter(Boolean);
+    const people = [d.contact, d.coLead, d.altContact, d.fiscalReporter, d.planApprover].filter(Boolean);
     return `
       <div class="contact-card">
         <div class="contact-card-header">
@@ -2877,7 +2883,7 @@ function renderContacts() {
               <div class="contact-info">
                 <div class="contact-name">${p.name}</div>
                 <div class="contact-role">${p.role}</div>
-                <div class="contact-email">${p.email}</div>
+                <div class="contact-email">${p.email || 'Email not on file'}</div>
               </div>
             </div>
           `).join('')}
